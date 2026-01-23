@@ -109,6 +109,7 @@ export const translations = {
     'spotlight.featured.title': 'Notable Alumni',
     'spotlight.featured.subtitle': 'Meet some of the exceptional individuals who have graduated from the Lapidim program and are making waves in the tech industry.',
     'spotlight.classOf': 'Class of',
+    'spotlight.cohort': 'Cohort',
     'spotlight.viewLinkedIn': 'View LinkedIn Profile',
     'spotlight.more': 'More Success Stories',
     'spotlight.cta': 'Are you a Lapidim alumni? Join our network and be featured.',
@@ -126,6 +127,7 @@ export const translations = {
     'login.success': 'Magic link sent!',
     'login.success.check': 'Check your email for the login link.',
     'login.demo': 'Demo: Click below to login instantly',
+    'login.demo.link': 'Login as',
     'login.demo.loginAs': 'Login as',
     'login.error': 'Email not found',
     'login.error.text': 'This email is not registered in our alumni database.',
@@ -143,6 +145,7 @@ export const translations = {
 
     'members.certificate.title': 'Your Certificate',
     'members.certificate.id': 'ID:',
+    'members.certificate.add': 'Add to LinkedIn',
     'members.certificate.addLinkedIn': 'Add to LinkedIn',
     'members.certificate.view': 'View Certificate',
 
@@ -315,6 +318,7 @@ export const translations = {
     'spotlight.featured.title': 'בוגרים בולטים',
     'spotlight.featured.subtitle': 'הכירו חלק מהאנשים יוצאי הדופן שסיימו את תוכנית לפידים ועושים גלים בתעשיית ההייטק.',
     'spotlight.classOf': 'מחזור',
+    'spotlight.cohort': 'מחזור',
     'spotlight.viewLinkedIn': 'צפייה בפרופיל לינקדאין',
     'spotlight.more': 'עוד סיפורי הצלחה',
     'spotlight.cta': 'אתם בוגרי לפידים? הצטרפו לרשת והופיעו כאן.',
@@ -332,6 +336,7 @@ export const translations = {
     'login.success': 'קישור נשלח!',
     'login.success.check': 'בדקו את האימייל לקבלת הקישור.',
     'login.demo': 'הדגמה: לחצו למטה לכניסה מיידית',
+    'login.demo.link': 'כניסה בתור',
     'login.demo.loginAs': 'כניסה בתור',
     'login.error': 'אימייל לא נמצא',
     'login.error.text': 'האימייל הזה לא רשום במאגר הבוגרים שלנו.',
@@ -349,6 +354,7 @@ export const translations = {
 
     'members.certificate.title': 'התעודה שלך',
     'members.certificate.id': 'מזהה:',
+    'members.certificate.add': 'הוספה ללינקדאין',
     'members.certificate.addLinkedIn': 'הוספה ללינקדאין',
     'members.certificate.view': 'צפייה בתעודה',
 
