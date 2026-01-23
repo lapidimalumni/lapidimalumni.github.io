@@ -1,49 +1,53 @@
+import { useLanguage } from '../hooks/useLanguage'
+
 export function About() {
+  const { t } = useLanguage()
+
   const benefits = [
-    'Tuition exemption throughout the program',
-    'Monthly living stipend',
-    'Dedicated workspace and study area',
-    'Personal mentoring by faculty members',
-    'Exposure to VCs, CEOs, and industry leaders',
-    'Access to exclusive networking events',
+    t('about.benefits.tuition'),
+    t('about.benefits.stipend'),
+    t('about.benefits.workspace'),
+    t('about.benefits.mentoring'),
+    t('about.benefits.exposure'),
+    t('about.benefits.events'),
   ]
 
   const selectionCriteria = [
-    { title: 'Academic Excellence', desc: 'Outstanding academic performance in computer science' },
-    { title: 'Leadership Qualities', desc: 'Demonstrated ability to lead and inspire others' },
-    { title: 'Interpersonal Skills', desc: 'Strong communication and collaboration abilities' },
-    { title: 'Entrepreneurial Spirit', desc: 'Passion for innovation and creating impact' },
+    { titleKey: 'about.selection.academic' as const, descKey: 'about.selection.academic.desc' as const },
+    { titleKey: 'about.selection.leadership' as const, descKey: 'about.selection.leadership.desc' as const },
+    { titleKey: 'about.selection.interpersonal' as const, descKey: 'about.selection.interpersonal.desc' as const },
+    { titleKey: 'about.selection.entrepreneurial' as const, descKey: 'about.selection.entrepreneurial.desc' as const },
   ]
 
   const timeline = [
     {
       year: '2008',
-      title: 'Program Founded',
-      description: 'Lapidim excellence program established at Technion',
+      titleKey: 'about.timeline.founded' as const,
+      descKey: 'about.timeline.founded.desc' as const,
     },
     {
       year: '2025',
-      title: 'Alumni Network Launch',
-      description: 'Official Lapidim Alumni Network established',
+      titleKey: 'about.timeline.alumni' as const,
+      descKey: 'about.timeline.alumni.desc' as const,
     },
   ]
 
   const alumniMission = [
     {
-      title: 'Foster Connections',
-      description: 'Build and maintain a strong network connecting alumni across industries, geographies, and generations.',
+      titleKey: 'about.network.foster' as const,
+      descKey: 'about.network.foster.desc' as const,
     },
     {
-      title: 'Support Growth',
-      description: 'Provide resources, mentorship, and opportunities for continuous professional development.',
+      titleKey: 'about.network.support' as const,
+      descKey: 'about.network.support.desc' as const,
     },
     {
-      title: 'Give Back',
-      description: 'Create pathways for alumni to contribute to the program and support current students.',
+      titleKey: 'about.network.give' as const,
+      descKey: 'about.network.give.desc' as const,
     },
     {
-      title: 'Celebrate Success',
-      description: 'Recognize and showcase the achievements of our alumni community worldwide.',
+      titleKey: 'about.network.celebrate' as const,
+      descKey: 'about.network.celebrate.desc' as const,
     },
   ]
 
@@ -54,17 +58,17 @@ export function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-amber-500 text-slate-900 px-4 py-2 rounded-full text-sm font-semibold mb-8">
-            About the Program
+            {t('about.badge')}
           </div>
 
           {/* Title */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 max-w-3xl">
-            Lapidim Excellence Program
+            {t('about.title')}
           </h1>
 
           {/* Description */}
           <p className="text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed">
-            A highly selective program identifying and training outstanding students who have the potential to become leaders in Israel's hi-tech industry and academia.
+            {t('about.subtitle')}
           </p>
         </div>
       </section>
@@ -85,15 +89,15 @@ export function About() {
               </div>
 
               <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
-                What is Lapidim?
+                {t('about.what.title')}
               </h2>
 
               <p className="text-slate-600 mb-4 leading-relaxed">
-                "Lapidim" (לפידים, Hebrew for "torches") is an entrepreneurship excellence program within the Taub Faculty of Computer Science at the Technion – Israel Institute of Technology.
+                {t('about.what.p1')}
               </p>
 
               <p className="text-slate-600 mb-8 leading-relaxed">
-                The program identifies outstanding academic students who possess leadership qualities and exceptional skills, offering them an inspiring study and work environment with exposure to the worlds of academia, industry, and technology.
+                {t('about.what.p2')}
               </p>
 
               {/* Benefits List */}
@@ -119,11 +123,11 @@ export function About() {
               </div>
 
               <h3 className="text-2xl font-serif text-slate-900 mb-4">
-                Selection Criteria
+                {t('about.selection.title')}
               </h3>
 
               <p className="text-slate-600 mb-6">
-                The acceptance process is highly selective and based on:
+                {t('about.selection.subtitle')}
               </p>
 
               <ul className="space-y-4">
@@ -131,8 +135,8 @@ export function About() {
                   <li key={index} className="flex items-start gap-3">
                     <span className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0"></span>
                     <div>
-                      <div className="font-semibold text-slate-900">{criteria.title}</div>
-                      <div className="text-sm text-slate-500">{criteria.desc}</div>
+                      <div className="font-semibold text-slate-900">{t(criteria.titleKey)}</div>
+                      <div className="text-sm text-slate-500">{t(criteria.descKey)}</div>
                     </div>
                   </li>
                 ))}
@@ -147,13 +151,13 @@ export function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-amber-600 font-semibold tracking-wider text-sm uppercase">
-              Our Purpose
+              {t('about.network.label')}
             </span>
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mt-4 mb-4">
-              The Alumni Network
+              {t('about.network.title')}
             </h2>
             <p className="text-lg text-slate-500 max-w-2xl mx-auto">
-              The Lapidim Alumni Network exists to strengthen the bonds between graduates and create lasting value for our community.
+              {t('about.network.subtitle')}
             </p>
           </div>
 
@@ -163,8 +167,8 @@ export function About() {
                 <div className="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center text-amber-400 mb-4">
                   <span className="text-xl font-bold">{index + 1}</span>
                 </div>
-                <h3 className="font-semibold text-slate-900 mb-2">{item.title}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{item.description}</p>
+                <h3 className="font-semibold text-slate-900 mb-2">{t(item.titleKey)}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{t(item.descKey)}</p>
               </div>
             ))}
           </div>
@@ -176,10 +180,10 @@ export function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-amber-600 font-semibold tracking-wider text-sm uppercase">
-              Our Journey
+              {t('about.timeline.label')}
             </span>
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mt-4">
-              Program Timeline
+              {t('about.timeline.title')}
             </h2>
           </div>
 
@@ -199,10 +203,10 @@ export function About() {
                 {/* Content */}
                 <div className="pt-1">
                   <h3 className="text-xl font-serif font-semibold text-slate-900 mb-1">
-                    {item.title}
+                    {t(item.titleKey)}
                   </h3>
                   <p className="text-slate-500">
-                    {item.description}
+                    {t(item.descKey)}
                   </p>
                 </div>
               </div>
@@ -215,7 +219,7 @@ export function About() {
       <section className="py-16 bg-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-serif text-white mb-6">
-            Learn More About the Lapidim Program
+            {t('about.cta')}
           </h2>
           <a
             href="https://lapidim.technion.ac.il"
@@ -223,7 +227,7 @@ export function About() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-amber-500 text-slate-900 px-8 py-4 rounded-lg font-semibold hover:bg-amber-400 transition-colors"
           >
-            Visit Official Website
+            {t('about.cta.button')}
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>

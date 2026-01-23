@@ -1,9 +1,11 @@
 import { useState, useEffect, FormEvent } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { useLanguage } from '../hooks/useLanguage'
 
 export function Login() {
   const { isAuthenticated, loginWithToken, checkEmail, login } = useAuth()
+  const { t } = useLanguage()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
 
@@ -56,17 +58,17 @@ export function Login() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-amber-500 text-slate-900 px-4 py-2 rounded-full text-sm font-semibold mb-8">
-            Members Only
+            {t('login.badge')}
           </div>
 
           {/* Title */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 max-w-3xl">
-            Member Login
+            {t('login.title')}
           </h1>
 
           {/* Description */}
           <p className="text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed">
-            Access exclusive content, events, and connect with fellow Lapidim alumni.
+            {t('login.subtitle')}
           </p>
         </div>
       </section>
@@ -81,16 +83,16 @@ export function Login() {
             </div>
 
             <h2 className="text-2xl font-serif text-slate-900 text-center mb-2">
-              Welcome Back
+              {t('login.welcome')}
             </h2>
             <p className="text-slate-500 text-center mb-8">
-              Enter your email to receive a magic login link
+              {t('login.instruction')}
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-slate-900 mb-2">
-                  Email Address
+                  {t('login.email')}
                 </label>
                 <input
                   type="email"
@@ -100,7 +102,7 @@ export function Login() {
                     setEmail(e.target.value)
                     setStatus('idle')
                   }}
-                  placeholder="your.email@example.com"
+                  placeholder={t('login.email.placeholder')}
                   className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-colors"
                   required
                 />
@@ -110,7 +112,7 @@ export function Login() {
                 type="submit"
                 className="w-full bg-slate-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-slate-800 transition-colors"
               >
-                Send Magic Link
+                {t('login.submit')}
               </button>
             </form>
 
@@ -121,21 +123,21 @@ export function Login() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="font-medium">Magic link sent!</span>
+                  <span className="font-medium">{t('login.success')}</span>
                 </div>
                 <p className="text-sm text-emerald-600 mb-4">
-                  Check your email for the login link.
+                  {t('login.success.check')}
                 </p>
                 <div className="bg-white rounded-lg p-3 border border-emerald-200">
-                  <p className="text-xs text-slate-500 mb-2">Demo: Click below to login instantly</p>
+                  <p className="text-xs text-slate-500 mb-2">{t('login.demo')}</p>
                   <button
                     onClick={handleDemoLogin}
                     className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 text-sm font-medium"
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
-                    Login as {foundUser.name}
+                    {t('login.demo.loginAs')} {foundUser.name}
                   </button>
                 </div>
               </div>
@@ -148,17 +150,17 @@ export function Login() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="font-medium">Email not found</span>
+                  <span className="font-medium">{t('login.error')}</span>
                 </div>
                 <p className="text-sm text-red-600 mt-1">
-                  This email is not registered in our alumni database.
+                  {t('login.error.text')}
                 </p>
               </div>
             )}
 
             {/* Demo Accounts */}
             <div className="mt-8 pt-6 border-t border-gray-100">
-              <p className="text-xs text-slate-400 text-center mb-3">Demo accounts for testing:</p>
+              <p className="text-xs text-slate-400 text-center mb-3">{t('login.demoAccounts')}</p>
               <div className="flex flex-col gap-2">
                 <button
                   type="button"

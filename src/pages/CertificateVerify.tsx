@@ -4,7 +4,7 @@ import { verifyCertificate, formatCertificateDate } from '../utils/certificate'
 
 export function CertificateVerify() {
   const { certId } = useParams<{ certId: string }>()
-  const { language } = useLanguage()
+  const { language, t } = useLanguage()
 
   const certificate = certId ? verifyCertificate(certId) : null
 
@@ -15,13 +15,13 @@ export function CertificateVerify() {
         <section className="bg-slate-900 pt-32 pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="inline-flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-8">
-              Verification Failed
+              {t('cert.invalid.badge')}
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 max-w-3xl">
-              Invalid Certificate
+              {t('cert.invalid.title')}
             </h1>
             <p className="text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed">
-              The certificate ID provided could not be verified in our system.
+              {t('cert.invalid.subtitle')}
             </p>
           </div>
         </section>
@@ -34,18 +34,18 @@ export function CertificateVerify() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-serif text-slate-900 mb-4">Certificate Not Found</h2>
+              <h2 className="text-2xl font-serif text-slate-900 mb-4">{t('cert.invalid.notFound')}</h2>
               <p className="text-slate-500 mb-8">
-                This certificate ID is not registered in our alumni database. Please check the ID and try again.
+                {t('cert.invalid.text')}
               </p>
               <Link
                 to="/"
                 className="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-slate-800 transition-colors"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                Back to Home
+                {t('cert.invalid.back')}
               </Link>
             </div>
           </div>
@@ -66,13 +66,13 @@ export function CertificateVerify() {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            Verified Certificate
+            {t('cert.verified.badge')}
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 max-w-3xl">
-            Certificate Verification
+            {t('cert.verified.title')}
           </h1>
           <p className="text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed">
-            This certificate has been verified as authentic and issued by the Lapidim Excellence Program.
+            {t('cert.verified.subtitle')}
           </p>
         </div>
       </section>
@@ -89,10 +89,10 @@ export function CertificateVerify() {
                 </svg>
               </div>
               <h2 className="text-2xl font-serif text-white mb-2">
-                Lapidim Excellence Program
+                {t('cert.program')}
               </h2>
               <p className="text-white/60 text-sm">
-                Certificate of Completion
+                {t('cert.completion')}
               </p>
             </div>
 
@@ -100,19 +100,19 @@ export function CertificateVerify() {
             <div className="p-8">
               <div className="space-y-6">
                 <div className="flex justify-between items-center py-4 border-b border-gray-100">
-                  <span className="text-slate-500">Certificate Holder</span>
+                  <span className="text-slate-500">{t('cert.holder')}</span>
                   <span className="font-semibold text-slate-900 text-lg">{holderName}</span>
                 </div>
                 <div className="flex justify-between items-center py-4 border-b border-gray-100">
-                  <span className="text-slate-500">Cohort Year</span>
+                  <span className="text-slate-500">{t('cert.cohort')}</span>
                   <span className="font-semibold text-slate-900">{certificate.cohortYear}</span>
                 </div>
                 <div className="flex justify-between items-center py-4 border-b border-gray-100">
-                  <span className="text-slate-500">Issue Date</span>
+                  <span className="text-slate-500">{t('cert.issued')}</span>
                   <span className="font-semibold text-slate-900">{formattedDate}</span>
                 </div>
                 <div className="flex justify-between items-center py-4">
-                  <span className="text-slate-500">Certificate ID</span>
+                  <span className="text-slate-500">{t('cert.id')}</span>
                   <span className="font-mono text-sm text-slate-700 bg-slate-100 px-3 py-1 rounded">
                     {certificate.certId}
                   </span>
@@ -127,9 +127,9 @@ export function CertificateVerify() {
                   </svg>
                 </div>
                 <div>
-                  <div className="font-semibold text-emerald-800">Authenticity Verified</div>
+                  <div className="font-semibold text-emerald-800">{t('cert.authentic')}</div>
                   <p className="text-sm text-emerald-600">
-                    This certificate is valid and issued by Technion's Lapidim Program.
+                    {t('cert.authentic.text')}
                   </p>
                 </div>
               </div>
@@ -140,10 +140,10 @@ export function CertificateVerify() {
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
                     <span className="text-white font-bold text-sm">L</span>
                   </div>
-                  <span className="font-semibold text-slate-900">Lapidim Alumni Network</span>
+                  <span className="font-semibold text-slate-900">{t('cert.network')}</span>
                 </div>
                 <p className="text-xs text-slate-500">
-                  Technion – Israel Institute of Technology
+                  {t('cert.technion')}
                 </p>
               </div>
             </div>

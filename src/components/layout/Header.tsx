@@ -92,7 +92,7 @@ export function Header() {
                 to="/login"
                 className="hidden md:block text-sm font-medium text-white bg-blue-600 px-5 py-2.5 rounded-lg hover:bg-blue-700 transition-colors"
               >
-                Member Login
+                {t('nav.login')}
               </Link>
             )}
 
@@ -171,7 +171,7 @@ export function Header() {
                   className="text-sm font-medium text-amber-400"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Member Login
+                  {t('nav.login')}
                 </Link>
               )}
             </nav>

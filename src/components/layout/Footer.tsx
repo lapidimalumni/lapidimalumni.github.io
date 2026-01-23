@@ -20,7 +20,7 @@ export function Footer() {
               </span>
             </div>
             <p className="text-sm text-white/60 mb-6 max-w-sm leading-relaxed">
-              Connecting excellence. The official alumni network of the Lapidim Entrepreneurship Excellence Program at the Technion – Israel Institute of Technology.
+              {t('footer.description')}
             </p>
             <div className="flex gap-4">
               <a
@@ -48,7 +48,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold mb-6">Quick Links</h3>
+            <h3 className="text-white font-semibold mb-6">{t('footer.quickLinks')}</h3>
             <ul className="space-y-3">
               <li>
                 <Link to="/about" className="text-sm text-white/60 hover:text-white transition-colors">
@@ -62,7 +62,7 @@ export function Footer() {
               </li>
               <li>
                 <Link to="/login" className="text-sm text-white/60 hover:text-white transition-colors">
-                  Member Login
+                  {t('footer.memberLogin')}
                 </Link>
               </li>
             </ul>
@@ -70,7 +70,7 @@ export function Footer() {
 
           {/* Technion */}
           <div>
-            <h3 className="text-white font-semibold mb-6">Technion</h3>
+            <h3 className="text-white font-semibold mb-6">{t('footer.technion')}</h3>
             <ul className="space-y-3">
               <li>
                 <a
@@ -79,8 +79,8 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="text-sm text-white/60 hover:text-white transition-colors inline-flex items-center gap-1"
                 >
-                  Lapidim Program
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {t('footer.lapidimProgram')}
+                  <svg className="w-3 h-3 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                 </a>
@@ -92,8 +92,8 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="text-sm text-white/60 hover:text-white transition-colors inline-flex items-center gap-1"
                 >
-                  Taub Faculty of CS
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {t('footer.taubFaculty')}
+                  <svg className="w-3 h-3 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                 </a>
@@ -105,8 +105,8 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="text-sm text-white/60 hover:text-white transition-colors inline-flex items-center gap-1"
                 >
-                  Technion
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {t('footer.technionSite')}
+                  <svg className="w-3 h-3 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                 </a>

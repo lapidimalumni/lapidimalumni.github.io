@@ -9,7 +9,7 @@ export function Home() {
   const stats = [
     {
       value: '17+',
-      label: 'YEARS OF EXCELLENCE',
+      labelKey: 'home.stats.years' as const,
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -18,7 +18,7 @@ export function Home() {
     },
     {
       value: '500+',
-      label: 'ALUMNI',
+      labelKey: 'home.stats.alumni' as const,
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -34,8 +34,8 @@ export function Home() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
         </svg>
       ),
-      title: 'Excellence',
-      description: 'Maintaining the highest standards in everything we do',
+      titleKey: 'home.values.excellence' as const,
+      descKey: 'home.values.excellence.desc' as const,
     },
     {
       icon: (
@@ -43,8 +43,8 @@ export function Home() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
       ),
-      title: 'Connection',
-      description: 'Building lasting relationships within our community',
+      titleKey: 'home.values.connection' as const,
+      descKey: 'home.values.connection.desc' as const,
     },
     {
       icon: (
@@ -52,8 +52,8 @@ export function Home() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
         </svg>
       ),
-      title: 'Innovation',
-      description: 'Pioneering new solutions and opportunities',
+      titleKey: 'home.values.innovation' as const,
+      descKey: 'home.values.innovation.desc' as const,
     },
     {
       icon: (
@@ -61,8 +61,8 @@ export function Home() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
         </svg>
       ),
-      title: 'Mentorship',
-      description: 'Guiding the next generation of leaders',
+      titleKey: 'home.values.mentorship' as const,
+      descKey: 'home.values.mentorship.desc' as const,
     },
   ]
 
@@ -91,13 +91,13 @@ export function Home() {
           <div className="max-w-2xl">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 text-amber-400 px-4 py-2 rounded-full text-sm font-medium mb-8">
-              Technion Excellence Program &bull; Est. 2008
+              {t('home.hero.badge')}
             </div>
 
             {/* Heading */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              Shaping Israel's{' '}
-              <span className="text-amber-400 font-serif italic">Tech Leaders</span>
+              {t('home.hero.title1')}{' '}
+              <span className="text-amber-400 font-serif italic">{t('home.hero.title2')}</span>
             </h1>
 
             {/* Description */}
@@ -111,8 +111,8 @@ export function Home() {
                 to="/about"
                 className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
               >
-                Discover Lapidim Alumni
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {t('home.hero.cta')}
+                <svg className="w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
@@ -120,7 +120,7 @@ export function Home() {
                 to="/login"
                 className="inline-flex items-center justify-center gap-2 bg-transparent text-white border-2 border-white/30 px-8 py-4 rounded-lg font-medium hover:bg-white/10 transition-colors"
               >
-                Alumni Login
+                {t('home.hero.login')}
               </Link>
             </div>
           </div>
@@ -136,7 +136,7 @@ export function Home() {
                   {stat.value}
                 </div>
                 <div className="text-xs text-white/60 tracking-wider">
-                  {stat.label}
+                  {t(stat.labelKey)}
                 </div>
               </div>
             ))}
@@ -167,13 +167,13 @@ export function Home() {
             {/* Content */}
             <div>
               <span className="text-amber-600 font-semibold tracking-wider text-sm uppercase">
-                Our Mission
+                {t('home.mission.label')}
               </span>
               <h2 className="text-4xl md:text-5xl font-serif text-slate-900 mt-4 mb-6 leading-tight">
-                Connecting Excellence,<br />Empowering Impact
+                {t('home.mission.title1')}<br />{t('home.mission.title2')}
               </h2>
               <p className="text-lg text-slate-600 mb-10 leading-relaxed">
-                The Lapidim Alumni Network fosters a dynamic connection between exceptional graduates and Israel's vibrant tech ecosystem. We aim to support and empower our members through collaboration, shared knowledge, and professional growth.
+                {t('home.mission.text')}
               </p>
 
               {/* Values Grid */}
@@ -184,8 +184,8 @@ export function Home() {
                       {value.icon}
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-900 mb-1">{value.title}</h3>
-                      <p className="text-sm text-slate-500">{value.description}</p>
+                      <h3 className="font-semibold text-slate-900 mb-1">{t(value.titleKey)}</h3>
+                      <p className="text-sm text-slate-500">{t(value.descKey)}</p>
                     </div>
                   </div>
                 ))}
@@ -201,13 +201,13 @@ export function Home() {
           {/* Header */}
           <div className="text-center mb-16">
             <span className="text-amber-600 font-semibold tracking-wider text-sm uppercase">
-              Get in Touch
+              {t('home.contact.label')}
             </span>
             <h2 className="text-4xl md:text-5xl font-serif text-slate-900 mt-4 mb-4">
-              Connect With Us
+              {t('home.contact.title')}
             </h2>
             <p className="text-lg text-slate-500 max-w-2xl mx-auto">
-              Have questions about the alumni network or interested in joining? We'd love to hear from you.
+              {t('home.contact.subtitle')}
             </p>
           </div>
 
@@ -215,7 +215,7 @@ export function Home() {
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Contact Info */}
             <div className="bg-white rounded-xl p-8 shadow-sm">
-              <h3 className="text-xl font-semibold text-slate-900 mb-6">Contact Information</h3>
+              <h3 className="text-xl font-semibold text-slate-900 mb-6">{t('home.contact.info')}</h3>
 
               <div className="space-y-6">
                 <a href="mailto:lapidim.alumni@gmail.com" className="flex items-start gap-4 group">
@@ -225,7 +225,7 @@ export function Home() {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-medium text-slate-900">Email</div>
+                    <div className="font-medium text-slate-900">{t('home.contact.email')}</div>
                     <div className="text-slate-500 group-hover:text-amber-600 transition-colors">lapidim.alumni@gmail.com</div>
                   </div>
                 </a>
@@ -237,8 +237,8 @@ export function Home() {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-medium text-slate-900">LinkedIn</div>
-                    <div className="text-slate-500 group-hover:text-amber-600 transition-colors">Lapidim Alumni Group</div>
+                    <div className="font-medium text-slate-900">{t('home.contact.linkedin')}</div>
+                    <div className="text-slate-500 group-hover:text-amber-600 transition-colors">{t('home.contact.linkedinGroup')}</div>
                   </div>
                 </a>
 
@@ -250,11 +250,11 @@ export function Home() {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-medium text-slate-900">Location</div>
+                    <div className="font-medium text-slate-900">{t('home.contact.location')}</div>
                     <div className="text-slate-500">
-                      Taub Faculty of Computer Science<br />
-                      Technion – Israel Institute of Technology<br />
-                      Haifa, Israel
+                      {t('home.contact.address1')}<br />
+                      {t('home.contact.address2')}<br />
+                      {t('home.contact.address3')}
                     </div>
                   </div>
                 </div>
@@ -263,19 +263,19 @@ export function Home() {
 
             {/* Contact Form */}
             <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
-              <h3 className="text-xl font-semibold text-slate-900 mb-6">Send a Message</h3>
+              <h3 className="text-xl font-semibold text-slate-900 mb-6">{t('home.contact.form')}</h3>
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-slate-900 mb-2">
-                    Full Name
+                    {t('home.contact.name')}
                   </label>
                   <input
                     type="text"
                     id="name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Your name"
+                    placeholder={t('home.contact.namePlaceholder')}
                     className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                     required
                   />
@@ -283,14 +283,14 @@ export function Home() {
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-slate-900 mb-2">
-                    Email Address
+                    {t('login.email')}
                   </label>
                   <input
                     type="email"
                     id="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="your.email@example.com"
+                    placeholder={t('home.contact.emailPlaceholder')}
                     className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                     required
                   />
@@ -298,14 +298,14 @@ export function Home() {
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-slate-900 mb-2">
-                    Message
+                    {t('home.contact.message')}
                   </label>
                   <textarea
                     id="message"
                     rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="How can we help you?"
+                    placeholder={t('home.contact.messagePlaceholder')}
                     className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors resize-none"
                     required
                   ></textarea>
@@ -315,7 +315,7 @@ export function Home() {
                   type="submit"
                   className="w-full bg-slate-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-slate-800 transition-colors"
                 >
-                  Send Message
+                  {t('home.contact.send')}
                 </button>
               </form>
             </div>

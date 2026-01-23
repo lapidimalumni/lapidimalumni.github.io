@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { useLanguage } from '../hooks/useLanguage'
 
 export function Spotlight() {
   const { isAuthenticated } = useAuth()
+  const { t } = useLanguage()
 
   const featuredAlumni = [
     {
@@ -74,17 +76,17 @@ export function Spotlight() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-amber-500 text-slate-900 px-4 py-2 rounded-full text-sm font-semibold mb-8">
-            Success Stories
+            {t('spotlight.badge')}
           </div>
 
           {/* Title */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 max-w-3xl">
-            Alumni Spotlight
+            {t('spotlight.title')}
           </h1>
 
           {/* Description */}
           <p className="text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed">
-            Celebrating the achievements of Lapidim alumni who are shaping Israel's tech industry and making global impact.
+            {t('spotlight.subtitle')}
           </p>
         </div>
       </section>
@@ -95,13 +97,13 @@ export function Spotlight() {
           {/* Section Header */}
           <div className="text-center mb-16">
             <span className="text-amber-600 font-semibold tracking-wider text-sm uppercase">
-              Featured
+              {t('spotlight.featured.label')}
             </span>
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mt-4 mb-4">
-              Notable Alumni
+              {t('spotlight.featured.title')}
             </h2>
             <p className="text-lg text-slate-500 max-w-2xl mx-auto">
-              Meet some of the exceptional individuals who have graduated from the Lapidim program and are making waves in the tech industry.
+              {t('spotlight.featured.subtitle')}
             </p>
           </div>
 
@@ -119,7 +121,7 @@ export function Spotlight() {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
                   <div className="absolute bottom-4 left-4">
                     <div className="text-amber-400 text-sm font-medium mb-1">
-                      Class of {alumni.classYear}
+                      {t('spotlight.classOf')} {alumni.classYear}
                     </div>
                     <h3 className="text-xl font-bold text-white">
                       {alumni.name}
@@ -150,7 +152,7 @@ export function Spotlight() {
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                     </svg>
-                    View LinkedIn Profile
+                    {t('spotlight.viewLinkedIn')}
                   </a>
                 </div>
               </div>
@@ -163,7 +165,7 @@ export function Spotlight() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-serif text-slate-900 text-center mb-10">
-            More Success Stories
+            {t('spotlight.more')}
           </h2>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -194,7 +196,7 @@ export function Spotlight() {
       <section className="py-16 bg-stone-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-slate-600 mb-6">
-            Are you a Lapidim alumni? Join our network and be featured.
+            {t('spotlight.cta')}
           </p>
           <Link
             to={isAuthenticated ? '/members' : '/login'}
@@ -203,7 +205,7 @@ export function Spotlight() {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
-            Submit Your Story
+            {t('spotlight.submit')}
           </Link>
         </div>
       </section>

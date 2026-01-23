@@ -6,7 +6,7 @@ import { generateLinkedInCertUrl } from '../utils/certificate'
 import { events } from '../data/events'
 
 export function Members() {
-  const { language } = useLanguage()
+  const { language, t } = useLanguage()
   const { user, isAuthenticated } = useAuth()
   const [emailNotifications, setEmailNotifications] = useState(() => {
     return localStorage.getItem('emailNotifications') === 'true'
@@ -43,17 +43,17 @@ export function Members() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-amber-500 text-slate-900 px-4 py-2 rounded-full text-sm font-semibold mb-8">
-            Members Area
+            {t('members.badge')}
           </div>
 
           {/* Title */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 max-w-3xl">
-            Welcome back, {userName}
+            {t('members.welcome')} {userName}
           </h1>
 
           {/* Description */}
           <p className="text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed">
-            Access your exclusive benefits, upcoming events, and manage your alumni profile.
+            {t('members.subtitle')}
           </p>
         </div>
       </section>
@@ -67,7 +67,7 @@ export function Members() {
               {/* Upcoming Events */}
               <div>
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-serif text-slate-900">Upcoming Events</h2>
+                  <h2 className="text-2xl font-serif text-slate-900">{t('members.events.upcoming')}</h2>
                 </div>
 
                 {upcomingEvents.length > 0 ? (
@@ -82,7 +82,7 @@ export function Members() {
                         <div className="p-5">
                           <div className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs font-medium mb-3">
                             <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-                            Upcoming
+                            {t('members.events.upcoming.badge')}
                           </div>
                           <h3 className="font-semibold text-slate-900 mb-2">
                             {language === 'he' ? event.titleHe : event.title}
@@ -112,7 +112,7 @@ export function Members() {
                               rel="noopener noreferrer"
                               className="mt-4 w-full bg-slate-900 text-white py-2 rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors block text-center"
                             >
-                              Register Now
+                              {t('members.events.register')}
                             </a>
                           )}
                         </div>
@@ -126,15 +126,15 @@ export function Members() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <p className="text-slate-500">No upcoming events at the moment.</p>
-                    <p className="text-sm text-slate-400 mt-1">Check back soon!</p>
+                    <p className="text-slate-500">{t('members.events.none')}</p>
+                    <p className="text-sm text-slate-400 mt-1">{t('members.events.checkBack')}</p>
                   </div>
                 )}
               </div>
 
               {/* Past Events */}
               <div>
-                <h2 className="text-2xl font-serif text-slate-900 mb-6">Past Events</h2>
+                <h2 className="text-2xl font-serif text-slate-900 mb-6">{t('members.events.past')}</h2>
                 <div className="grid md:grid-cols-2 gap-6">
                   {pastEvents.slice(0, 4).map(event => (
                     <div key={event.id} className="bg-white rounded-xl overflow-hidden shadow-sm opacity-75 hover:opacity-100 transition-opacity">
@@ -145,7 +145,7 @@ export function Members() {
                           className="w-full h-32 object-cover grayscale"
                         />
                         <div className="absolute top-3 left-3 bg-slate-900/80 text-white px-2 py-1 rounded text-xs">
-                          Past Event
+                          {t('members.events.past.badge')}
                         </div>
                       </div>
                       <div className="p-4">
@@ -175,15 +175,15 @@ export function Members() {
                     <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                     </svg>
-                    <span className="text-white/90 text-sm font-medium">Share Your Story</span>
+                    <span className="text-white/90 text-sm font-medium">{t('members.spotlight.label')}</span>
                   </div>
 
                   <h3 className="text-xl font-bold text-white mb-2">
-                    Get Featured in the Alumni Spotlight
+                    {t('members.spotlight.title')}
                   </h3>
 
                   <p className="text-white/80 text-sm mb-4 leading-relaxed">
-                    Inspire the next generation of Lapidim students. Share your journey and achievements with our community.
+                    {t('members.spotlight.text')}
                   </p>
 
                   <a
@@ -195,7 +195,7 @@ export function Members() {
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>
-                    Submit Your Story
+                    {t('members.spotlight.button')}
                   </a>
                 </div>
               </div>
@@ -209,8 +209,8 @@ export function Members() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900">Your Certificate</h3>
-                    <p className="text-xs text-slate-500">ID: {user.certId}</p>
+                    <h3 className="font-semibold text-slate-900">{t('members.certificate.title')}</h3>
+                    <p className="text-xs text-slate-500">{t('members.certificate.id')} {user.certId}</p>
                   </div>
                 </div>
                 <div className="space-y-3">
@@ -223,13 +223,13 @@ export function Members() {
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                     </svg>
-                    Add to LinkedIn
+                    {t('members.certificate.addLinkedIn')}
                   </a>
                   <Link
                     to={`/verify/${user.certId}`}
                     className="flex items-center justify-center gap-2 w-full bg-stone-100 text-slate-700 py-2.5 rounded-lg text-sm font-medium hover:bg-stone-200 transition-colors"
                   >
-                    View Certificate
+                    {t('members.certificate.view')}
                   </Link>
                 </div>
               </div>
@@ -244,8 +244,8 @@ export function Members() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-900">Email Updates</h3>
-                      <p className="text-xs text-slate-500">Event notifications</p>
+                      <h3 className="font-semibold text-slate-900">{t('members.notifications.title')}</h3>
+                      <p className="text-xs text-slate-500">{t('members.notifications.desc')}</p>
                     </div>
                   </div>
                   <button
@@ -272,8 +272,8 @@ export function Members() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900">WhatsApp Group</h3>
-                    <p className="text-xs text-slate-500">Join the conversation</p>
+                    <h3 className="font-semibold text-slate-900">{t('members.whatsapp.title')}</h3>
+                    <p className="text-xs text-slate-500">{t('members.whatsapp.desc')}</p>
                   </div>
                 </div>
                 <a
@@ -282,13 +282,13 @@ export function Members() {
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full bg-green-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
                 >
-                  Join Group
+                  {t('members.whatsapp.button')}
                 </a>
               </div>
 
               {/* Quick Links */}
               <div className="bg-white rounded-xl p-6 shadow-sm">
-                <h3 className="font-semibold text-slate-900 mb-4">Quick Links</h3>
+                <h3 className="font-semibold text-slate-900 mb-4">{t('members.links.title')}</h3>
                 <ul className="space-y-3">
                   <li>
                     <a
@@ -300,7 +300,7 @@ export function Members() {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                       </svg>
-                      Official Lapidim Website
+                      {t('members.links.official')}
                     </a>
                   </li>
                   <li>
@@ -313,7 +313,7 @@ export function Members() {
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                       </svg>
-                      LinkedIn Group
+                      {t('members.links.linkedin')}
                     </a>
                   </li>
                   <li>
@@ -324,7 +324,7 @@ export function Members() {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      Contact Us
+                      {t('members.links.contact')}
                     </a>
                   </li>
                 </ul>
