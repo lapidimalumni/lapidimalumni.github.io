@@ -8,7 +8,7 @@ export function Home() {
 
   const stats = [
     {
-      value: '17+',
+      value: '18',
       labelKey: 'home.stats.years' as const,
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -17,7 +17,7 @@ export function Home() {
       ),
     },
     {
-      value: '500+',
+      value: '150+',
       labelKey: 'home.stats.alumni' as const,
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -230,7 +230,7 @@ export function Home() {
                   </div>
                 </a>
 
-                <a href="https://www.linkedin.com/groups/17048008/" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group">
+                <a href="https://www.linkedin.com/company/lapidim-program-alumni/" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group">
                   <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600 flex-shrink-0">
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -241,23 +241,6 @@ export function Home() {
                     <div className="text-slate-500 group-hover:text-amber-600 transition-colors">{t('home.contact.linkedinGroup')}</div>
                   </div>
                 </a>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600 flex-shrink-0">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="font-medium text-slate-900">{t('home.contact.location')}</div>
-                    <div className="text-slate-500">
-                      {t('home.contact.address1')}<br />
-                      {t('home.contact.address2')}<br />
-                      {t('home.contact.address3')}
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 

@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../../hooks/useLanguage'
+import { useAuth } from '../../hooks/useAuth'
 
 export function Footer() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
+  const { isAuthenticated } = useAuth()
   const currentYear = new Date().getFullYear()
 
   return (
@@ -12,11 +14,13 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">L</span>
-              </div>
+              <img
+                src="/images/lapidim-logo.jpeg"
+                alt="Lapidim Logo"
+                className="w-10 h-10 rounded-lg object-cover"
+              />
               <span className="font-semibold text-xl text-white">
-                Lapidim Alumni
+                Lapidim Program Alumni
               </span>
             </div>
             <p className="text-sm text-white/60 mb-6 max-w-sm leading-relaxed">
@@ -24,7 +28,7 @@ export function Footer() {
             </p>
             <div className="flex gap-4">
               <a
-                href="https://www.linkedin.com/groups/17048008/"
+                href="https://www.linkedin.com/company/lapidim-program-alumni/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-colors"
@@ -55,11 +59,13 @@ export function Footer() {
                   {t('nav.about')}
                 </Link>
               </li>
-              <li>
-                <Link to="/spotlight" className="text-sm text-white/60 hover:text-white transition-colors">
-                  {t('nav.spotlight')}
-                </Link>
-              </li>
+              {isAuthenticated && (
+                <li>
+                  <Link to="/spotlight" className="text-sm text-white/60 hover:text-white transition-colors">
+                    {t('nav.spotlight')}
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link to="/login" className="text-sm text-white/60 hover:text-white transition-colors">
                   {t('footer.memberLogin')}
@@ -74,7 +80,7 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="https://lapidim.technion.ac.il"
+                  href={language === 'he' ? 'https://lapidim.cs.technion.ac.il/he/' : 'https://lapidim.cs.technion.ac.il/'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-white/60 hover:text-white transition-colors inline-flex items-center gap-1"
@@ -117,7 +123,7 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/10 mt-12 pt-8 text-center text-sm text-white/40">
-          <p>&copy; {currentYear} Lapidim Alumni. {t('footer.rights')}</p>
+          <p>&copy; {currentYear} Lapidim Program Alumni. {t('footer.rights')}</p>
         </div>
       </div>
     </footer>

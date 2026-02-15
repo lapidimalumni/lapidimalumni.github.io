@@ -33,7 +33,7 @@ export function generateLinkedInCertUrl(user: MockUser, domain: string): string 
   const params = new URLSearchParams({
     startTask: 'CERTIFICATION_NAME',
     name: 'Lapidim Excellence Program Alumni',
-    organizationName: 'Lapidim Alumni - Technion',
+    organizationName: 'Lapidim Program Alumni',
     certId: user.certId,
     certUrl: `https://${domain}${basePath}#/verify/${user.certId}`,
     issueMonth: String(issueDate.getMonth() + 1),

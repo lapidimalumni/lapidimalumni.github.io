@@ -22,7 +22,6 @@ export function Members() {
 
   const userName = language === 'he' ? user.nameHe : user.name
   const upcomingEvents = events.filter(e => e.type === 'upcoming')
-  const pastEvents = events.filter(e => e.type === 'past')
   const domain = window.location.host
   const linkedInUrl = generateLinkedInCertUrl(user, domain)
 
@@ -132,34 +131,6 @@ export function Members() {
                 )}
               </div>
 
-              {/* Past Events */}
-              <div>
-                <h2 className="text-2xl font-serif text-slate-900 mb-6">{t('members.events.past')}</h2>
-                <div className="grid md:grid-cols-2 gap-6">
-                  {pastEvents.slice(0, 4).map(event => (
-                    <div key={event.id} className="bg-white rounded-xl overflow-hidden shadow-sm opacity-75 hover:opacity-100 transition-opacity">
-                      <div className="relative">
-                        <img
-                          src={event.image}
-                          alt={language === 'he' ? event.titleHe : event.title}
-                          className="w-full h-32 object-cover grayscale"
-                        />
-                        <div className="absolute top-3 left-3 bg-slate-900/80 text-white px-2 py-1 rounded text-xs">
-                          {t('members.events.past.badge')}
-                        </div>
-                      </div>
-                      <div className="p-4">
-                        <h3 className="font-semibold text-slate-900 mb-1 text-sm">
-                          {language === 'he' ? event.titleHe : event.title}
-                        </h3>
-                        <p className="text-xs text-slate-500">
-                          {formatDate(event.date)}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
 
             {/* Right Column - Sidebar */}
@@ -186,17 +157,15 @@ export function Members() {
                     {t('members.spotlight.text')}
                   </p>
 
-                  <a
-                    href="https://forms.gle/YOUR_GOOGLE_FORM_ID"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to="#"
                     className="inline-flex items-center gap-2 bg-white text-amber-600 px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-amber-50 transition-colors shadow-md"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>
                     {t('members.spotlight.button')}
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -276,14 +245,12 @@ export function Members() {
                     <p className="text-xs text-slate-500">{t('members.whatsapp.desc')}</p>
                   </div>
                 </div>
-                <a
-                  href="https://chat.whatsapp.com/example"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="#"
                   className="flex items-center justify-center gap-2 w-full bg-green-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
                 >
                   {t('members.whatsapp.button')}
-                </a>
+                </Link>
               </div>
 
               {/* Quick Links */}
@@ -292,7 +259,7 @@ export function Members() {
                 <ul className="space-y-3">
                   <li>
                     <a
-                      href="https://lapidim.technion.ac.il"
+                      href={language === 'he' ? 'https://lapidim.cs.technion.ac.il/he/' : 'https://lapidim.cs.technion.ac.il/'}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 text-slate-600 hover:text-amber-600 transition-colors text-sm"
@@ -305,7 +272,7 @@ export function Members() {
                   </li>
                   <li>
                     <a
-                      href="https://www.linkedin.com/groups/17048008/"
+                      href="https://www.linkedin.com/company/lapidim-program-alumni/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 text-slate-600 hover:text-amber-600 transition-colors text-sm"

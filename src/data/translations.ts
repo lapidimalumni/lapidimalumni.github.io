@@ -9,20 +9,20 @@ export const translations = {
     'nav.logout': 'Logout',
 
     // Home Page
-    'home.hero.badge': 'Technion Excellence Program • Est. 2008',
+    'home.hero.badge': 'Lapidim Excellence Program • Faculty of Computer Science, Technion',
     'home.hero.title1': 'Shaping Israel\'s',
-    'home.hero.title2': 'Tech Leaders',
-    'home.hero.description': 'Join the network of exceptional Technion graduates who are shaping the future of technology and innovation.',
-    'home.hero.cta': 'Discover Lapidim Alumni',
+    'home.hero.title2': 'Next Leaders',
+    'home.hero.description': 'Join the network of exceptional Technion graduates who are shaping the future of entrepreneurship and innovation.',
+    'home.hero.cta': 'Discover Lapidim Excellence Program',
     'home.hero.login': 'Alumni Login',
 
-    'home.stats.years': 'YEARS OF EXCELLENCE',
+    'home.stats.years': 'YEARS OF LEADERSHIP',
     'home.stats.alumni': 'ALUMNI',
 
     'home.mission.label': 'Our Mission',
     'home.mission.title1': 'Connecting Excellence,',
-    'home.mission.title2': 'Empowering Impact',
-    'home.mission.text': 'The Lapidim Alumni Network fosters a dynamic connection between exceptional graduates and Israel\'s vibrant tech ecosystem. We aim to support and empower our members through collaboration, shared knowledge, and professional growth.',
+    'home.mission.title2': 'Creating Opportunities',
+    'home.mission.text': 'The Lapidim Program Alumni Network fosters a continuous connection between the program\'s exceptional graduates who are deeply integrated into Israel\'s vibrant tech and academic ecosystem. We aim to support and empower our members through collaboration, sharing knowledge, and professional growth.',
 
     'home.values.excellence': 'Excellence',
     'home.values.excellence.desc': 'Maintaining the highest standards in everything we do',
@@ -35,11 +35,11 @@ export const translations = {
 
     'home.contact.label': 'Get in Touch',
     'home.contact.title': 'Connect With Us',
-    'home.contact.subtitle': 'Have questions about the alumni network or interested in joining? We\'d love to hear from you.',
+    'home.contact.subtitle': 'An alumni and interested in joining the network? Have any questions regarding the Lapidim Program? We\'d love to hear from you.',
     'home.contact.info': 'Contact Information',
     'home.contact.email': 'Email',
     'home.contact.linkedin': 'LinkedIn',
-    'home.contact.linkedinGroup': 'Lapidim Alumni Group',
+    'home.contact.linkedinGroup': 'Lapidim Program Alumni on LinkedIn',
     'home.contact.location': 'Location',
     'home.contact.address1': 'Taub Faculty of Computer Science',
     'home.contact.address2': 'Technion – Israel Institute of Technology',
@@ -55,7 +55,7 @@ export const translations = {
     // About Page
     'about.badge': 'About the Program',
     'about.title': 'Lapidim Excellence Program',
-    'about.subtitle': 'A highly selective program identifying and training outstanding students who have the potential to become leaders in Israel\'s hi-tech industry and academia.',
+    'about.subtitle': 'An exclusive program for exceptional computer science students at the Technion who have the potential to become leaders and entrepreneurs in Israel\'s hi-tech industry and academia.',
 
     'about.what.title': 'What is Lapidim?',
     'about.what.p1': '"Lapidim" (לפידים, Hebrew for "torches") is an entrepreneurship excellence program within the Taub Faculty of Computer Science at the Technion – Israel Institute of Technology.',
@@ -81,9 +81,9 @@ export const translations = {
 
     'about.network.label': 'Our Purpose',
     'about.network.title': 'The Alumni Network',
-    'about.network.subtitle': 'The Lapidim Alumni Network exists to strengthen the bonds between graduates and create lasting value for our community.',
+    'about.network.subtitle': 'The Lapidim Alumni Network exists to strengthen the bonds between graduates and create collaboration opportunities.',
     'about.network.foster': 'Foster Connections',
-    'about.network.foster.desc': 'Build and maintain a strong network connecting alumni across industries, geographies, and generations.',
+    'about.network.foster.desc': 'Build and maintain a strong network connecting alumni across classes.',
     'about.network.support': 'Support Growth',
     'about.network.support.desc': 'Provide resources, mentorship, and opportunities for continuous professional development.',
     'about.network.give': 'Give Back',
@@ -99,7 +99,7 @@ export const translations = {
     'about.timeline.alumni.desc': 'Official Lapidim Alumni Network established',
 
     'about.cta': 'Learn More About the Lapidim Program',
-    'about.cta.button': 'Visit Official Website',
+    'about.cta.button': 'Visit Lapidim Program Website',
 
     // Spotlight Page
     'spotlight.badge': 'Success Stories',
@@ -181,7 +181,7 @@ export const translations = {
     'cert.id': 'Certificate ID',
     'cert.authentic': 'Authenticity Verified',
     'cert.authentic.text': 'This certificate is valid and issued by Technion\'s Lapidim Program.',
-    'cert.network': 'Lapidim Alumni Network',
+    'cert.network': 'Lapidim Program Alumni Network',
     'cert.technion': 'Technion – Israel Institute of Technology',
 
     'cert.invalid.badge': 'Verification Failed',
@@ -192,7 +192,7 @@ export const translations = {
     'cert.invalid.back': 'Back to Home',
 
     // Footer
-    'footer.description': 'Connecting excellence. The official alumni network of the Lapidim Entrepreneurship Excellence Program at the Technion – Israel Institute of Technology.',
+    'footer.description': 'Connecting excellence. The official alumni network of the Lapidim Excellence Program at the Technion – Israel Institute of Technology.',
     'footer.quickLinks': 'Quick Links',
     'footer.memberLogin': 'Member Login',
     'footer.technion': 'Technion',
@@ -214,41 +214,41 @@ export const translations = {
     'nav.about': 'אודות לפידים',
     'nav.spotlight': 'בוגרים מצטיינים',
     'nav.login': 'התחברות',
-    'nav.members': 'אזור חברים',
+    'nav.members': 'איזור בוגרים',
     'nav.logout': 'התנתק',
 
     // Home Page
-    'home.hero.badge': 'תוכנית מצוינות הטכניון • מאז 2008',
+    'home.hero.badge': 'תוכנית המצוינות לפידים • הפקולטה למדעי המחשב, טכניון',
     'home.hero.title1': 'מעצבים את',
-    'home.hero.title2': 'מנהיגי ההייטק',
-    'home.hero.description': 'הצטרפו לרשת בוגרי הטכניון המצטיינים שמעצבים את עתיד הטכנולוגיה והחדשנות.',
-    'home.hero.cta': 'גלו את בוגרי לפידים',
+    'home.hero.title2': 'המנהיגים הבאים',
+    'home.hero.description': 'הצטרפו לרשת בוגרי הטכניון המצטיינים שמעצבים את עתיד היזמות והחדשנות.',
+    'home.hero.cta': 'גלו את תוכנית המצוינות לפידים',
     'home.hero.login': 'כניסת בוגרים',
 
-    'home.stats.years': 'שנות מצוינות',
+    'home.stats.years': 'שנות מנהיגות',
     'home.stats.alumni': 'בוגרים',
 
     'home.mission.label': 'המשימה שלנו',
     'home.mission.title1': 'מחברים מצוינות,',
-    'home.mission.title2': 'מעצימים השפעה',
-    'home.mission.text': 'רשת בוגרי לפידים מטפחת קשר דינמי בין בוגרים מצטיינים לאקוסיסטם ההייטק התוסס של ישראל. אנו שואפים לתמוך ולהעצים את חברינו באמצעות שיתוף פעולה, שיתוף ידע וצמיחה מקצועית.',
+    'home.mission.title2': 'יוצרים הזדמנויות',
+    'home.mission.text': 'רשת בוגרי תוכנית לפידים מטפחת קשר מתמשך בין בוגרי התוכנית המצטיינים המשולבים עמוקות באקוסיסטם ההייטק והאקדמי התוסס של ישראל. אנו שואפים לתמוך ולהעצים את חברינו באמצעות שיתוף פעולה, שיתוף ידע וצמיחה מקצועית.',
 
     'home.values.excellence': 'מצוינות',
-    'home.values.excellence.desc': 'שמירה על הסטנדרטים הגבוהים ביותר בכל מה שאנו עושים',
+    'home.values.excellence.desc': 'שמירה על הסטנדרטים הגבוהים של תוכנית המצויינות',
     'home.values.connection': 'חיבור',
-    'home.values.connection.desc': 'בניית קשרים ארוכי טווח בתוך הקהילה שלנו',
+    'home.values.connection.desc': 'בניית קשרים בתוך הקהילה שלנו',
     'home.values.innovation': 'חדשנות',
-    'home.values.innovation.desc': 'חלוצים בפתרונות והזדמנויות חדשות',
+    'home.values.innovation.desc': 'יצירת הזדמנויות לשיתופי פעולה בתחום החדשנות',
     'home.values.mentorship': 'מנטורינג',
-    'home.values.mentorship.desc': 'הנחיית הדור הבא של מנהיגים',
+    'home.values.mentorship.desc': 'הנחיית הדור הבא של בוגרי התוכנית',
 
     'home.contact.label': 'צרו קשר',
     'home.contact.title': 'התחברו אלינו',
-    'home.contact.subtitle': 'יש לכם שאלות על רשת הבוגרים או מעוניינים להצטרף? נשמח לשמוע מכם.',
+    'home.contact.subtitle': 'בוגרים ומעוניינים להצטרף לרשת? יש לכם שאלות בנוגע לתוכנית לפידים? נשמח לשמוע מכם.',
     'home.contact.info': 'פרטי התקשרות',
     'home.contact.email': 'אימייל',
     'home.contact.linkedin': 'לינקדאין',
-    'home.contact.linkedinGroup': 'קבוצת בוגרי לפידים',
+    'home.contact.linkedinGroup': 'בוגרי תוכנית לפידים בלינקדאין',
     'home.contact.location': 'מיקום',
     'home.contact.address1': 'הפקולטה למדעי המחשב ע"ש טאוב',
     'home.contact.address2': 'הטכניון – מכון טכנולוגי לישראל',
@@ -264,7 +264,7 @@ export const translations = {
     // About Page
     'about.badge': 'אודות התוכנית',
     'about.title': 'תוכנית המצוינות לפידים',
-    'about.subtitle': 'תוכנית סלקטיבית ביותר המזהה ומכשירה סטודנטים מצטיינים בעלי פוטנציאל להפוך למנהיגים בתעשיית ההייטק והאקדמיה בישראל.',
+    'about.subtitle': 'תוכנית בלעדית לסטודנטים מצטיינים למדעי המחשב בטכניון בעלי פוטנציאל להפוך למנהיגים ויזמים בתעשיית ההייטק והאקדמיה בישראל.',
 
     'about.what.title': 'מה זה לפידים?',
     'about.what.p1': '"לפידים" היא תוכנית מצוינות יזמית בפקולטה למדעי המחשב ע"ש טאוב בטכניון – מכון טכנולוגי לישראל.',
@@ -280,25 +280,25 @@ export const translations = {
     'about.selection.title': 'קריטריוני קבלה',
     'about.selection.subtitle': 'תהליך הקבלה סלקטיבי ביותר ומבוסס על:',
     'about.selection.academic': 'מצוינות אקדמית',
-    'about.selection.academic.desc': 'הישגים אקדמיים מצטיינים במדעי המחשב',
+    'about.selection.academic.desc': 'הישגים אקדמיים מצויינים במדעי המחשב',
     'about.selection.leadership': 'תכונות מנהיגות',
-    'about.selection.leadership.desc': 'יכולת מוכחת להוביל ולהשראה אחרים',
+    'about.selection.leadership.desc': 'זיקה להובלה טכנולוגית ואקדמית',
     'about.selection.interpersonal': 'כישורים בין-אישיים',
-    'about.selection.interpersonal.desc': 'יכולות תקשורת ושיתוף פעולה חזקות',
+    'about.selection.interpersonal.desc': 'יכולות חזקות בתקשורת בין-אישית ושיתופי פעולה',
     'about.selection.entrepreneurial': 'רוח יזמית',
-    'about.selection.entrepreneurial.desc': 'תשוקה לחדשנות ויצירת השפעה',
+    'about.selection.entrepreneurial.desc': 'תשוקה לחדשנות וקידמה',
 
     'about.network.label': 'המטרה שלנו',
     'about.network.title': 'רשת הבוגרים',
-    'about.network.subtitle': 'רשת בוגרי לפידים קיימת כדי לחזק את הקשרים בין הבוגרים וליצור ערך מתמשך לקהילה שלנו.',
+    'about.network.subtitle': 'רשת בוגרי לפידים קיימת כדי לחזק את הקשרים בין הבוגרים וליצור הזדמנויות לשיתוף פעולה.',
     'about.network.foster': 'טיפוח קשרים',
-    'about.network.foster.desc': 'בניית ותחזוקת רשת חזקה המחברת בוגרים מתעשיות, גיאוגרפיות ודורות שונים.',
+    'about.network.foster.desc': 'בניית רשת חזקה המחברת בוגרים ממחזורים שונים.',
     'about.network.support': 'תמיכה בצמיחה',
-    'about.network.support.desc': 'מתן משאבים, מנטורינג והזדמנויות להתפתחות מקצועית מתמשכת.',
+    'about.network.support.desc': 'מתן משאבים, מנטורינג והזדמנויות להתפתחות מקצועית.',
     'about.network.give': 'החזרה לקהילה',
-    'about.network.give.desc': 'יצירת מסלולים לבוגרים לתרום לתוכנית ולתמוך בסטודנטים הנוכחיים.',
+    'about.network.give.desc': 'יצירת אפשרויות לבוגרים לתרום לתוכנית ולתמוך בסטודנטים הנוכחיים.',
     'about.network.celebrate': 'חגיגת הצלחה',
-    'about.network.celebrate.desc': 'הכרה והצגת ההישגים של קהילת הבוגרים שלנו ברחבי העולם.',
+    'about.network.celebrate.desc': 'הכרה בהישגים של בוגרי התוכנית.',
 
     'about.timeline.label': 'המסע שלנו',
     'about.timeline.title': 'ציר הזמן של התוכנית',
@@ -308,12 +308,12 @@ export const translations = {
     'about.timeline.alumni.desc': 'רשת בוגרי לפידים הרשמית הוקמה',
 
     'about.cta': 'למידע נוסף על תוכנית לפידים',
-    'about.cta.button': 'לאתר הרשמי',
+    'about.cta.button': 'לאתר תוכנית לפידים',
 
     // Spotlight Page
     'spotlight.badge': 'סיפורי הצלחה',
     'spotlight.title': 'בוגרים מצטיינים',
-    'spotlight.subtitle': 'חוגגים את ההישגים של בוגרי לפידים שמעצבים את תעשיית ההייטק בישראל ומשפיעים בעולם.',
+    'spotlight.subtitle': 'חוגגים את ההישגים של בוגרי לפידים בתעשייה והאקדמיה.',
     'spotlight.featured.label': 'מובילים',
     'spotlight.featured.title': 'בוגרים בולטים',
     'spotlight.featured.subtitle': 'הכירו חלק מהאנשים יוצאי הדופן שסיימו את תוכנית לפידים ועושים גלים בתעשיית ההייטק.',
@@ -343,9 +343,9 @@ export const translations = {
     'login.demoAccounts': 'חשבונות הדגמה לבדיקה:',
 
     // Members Page
-    'members.badge': 'אזור חברים',
+    'members.badge': 'איזור בוגרים',
     'members.welcome': 'ברוך שובך,',
-    'members.subtitle': 'גישה להטבות הבלעדיות שלך, אירועים קרובים וניהול פרופיל הבוגר שלך.',
+    'members.subtitle': 'גישה לניהול פרופיל הבוגר שלך, אירועים קרובים ולינקים שימושיים.',
 
     'members.spotlight.label': 'שתפו את הסיפור שלכם',
     'members.spotlight.title': 'הופיעו בזרקור הבוגרים',
@@ -390,7 +390,7 @@ export const translations = {
     'cert.id': 'מזהה תעודה',
     'cert.authentic': 'אותנטיות מאומתת',
     'cert.authentic.text': 'תעודה זו תקפה והונפקה על ידי תוכנית לפידים בטכניון.',
-    'cert.network': 'רשת בוגרי לפידים',
+    'cert.network': 'רשת בוגרי תוכנית לפידים',
     'cert.technion': 'הטכניון – מכון טכנולוגי לישראל',
 
     'cert.invalid.badge': 'האימות נכשל',
@@ -401,7 +401,7 @@ export const translations = {
     'cert.invalid.back': 'חזרה לדף הבית',
 
     // Footer
-    'footer.description': 'מחברים מצוינות. רשת הבוגרים הרשמית של תוכנית המצוינות היזמית לפידים בטכניון – מכון טכנולוגי לישראל.',
+    'footer.description': 'מחברים מצוינות. רשת הבוגרים הרשמית של תוכנית המצוינות לפידים בטכניון – מכון טכנולוגי לישראל.',
     'footer.quickLinks': 'קישורים מהירים',
     'footer.memberLogin': 'כניסת חברים',
     'footer.technion': 'טכניון',

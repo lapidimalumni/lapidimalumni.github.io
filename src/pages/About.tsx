@@ -1,7 +1,7 @@
 import { useLanguage } from '../hooks/useLanguage'
 
 export function About() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
 
   const benefits = [
     t('about.benefits.tuition'),
@@ -17,19 +17,6 @@ export function About() {
     { titleKey: 'about.selection.leadership' as const, descKey: 'about.selection.leadership.desc' as const },
     { titleKey: 'about.selection.interpersonal' as const, descKey: 'about.selection.interpersonal.desc' as const },
     { titleKey: 'about.selection.entrepreneurial' as const, descKey: 'about.selection.entrepreneurial.desc' as const },
-  ]
-
-  const timeline = [
-    {
-      year: '2008',
-      titleKey: 'about.timeline.founded' as const,
-      descKey: 'about.timeline.founded.desc' as const,
-    },
-    {
-      year: '2025',
-      titleKey: 'about.timeline.alumni' as const,
-      descKey: 'about.timeline.alumni.desc' as const,
-    },
   ]
 
   const alumniMission = [
@@ -175,46 +162,6 @@ export function About() {
         </div>
       </section>
 
-      {/* Timeline Section */}
-      <section className="py-20 bg-stone-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="text-amber-600 font-semibold tracking-wider text-sm uppercase">
-              {t('about.timeline.label')}
-            </span>
-            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mt-4">
-              {t('about.timeline.title')}
-            </h2>
-          </div>
-
-          <div className="max-w-2xl mx-auto">
-            {timeline.map((item, index) => (
-              <div key={index} className="flex gap-6 pb-12 last:pb-0">
-                {/* Year Badge */}
-                <div className="flex flex-col items-center">
-                  <div className="w-16 h-10 bg-amber-500 rounded-full flex items-center justify-center text-slate-900 font-bold text-sm">
-                    {item.year}
-                  </div>
-                  {index < timeline.length - 1 && (
-                    <div className="w-0.5 h-full bg-amber-300 mt-2"></div>
-                  )}
-                </div>
-
-                {/* Content */}
-                <div className="pt-1">
-                  <h3 className="text-xl font-serif font-semibold text-slate-900 mb-1">
-                    {t(item.titleKey)}
-                  </h3>
-                  <p className="text-slate-500">
-                    {t(item.descKey)}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-16 bg-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -222,7 +169,7 @@ export function About() {
             {t('about.cta')}
           </h2>
           <a
-            href="https://lapidim.technion.ac.il"
+            href={language === 'he' ? 'https://lapidim.cs.technion.ac.il/he/' : 'https://lapidim.cs.technion.ac.il/'}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-amber-500 text-slate-900 px-8 py-4 rounded-lg font-semibold hover:bg-amber-400 transition-colors"

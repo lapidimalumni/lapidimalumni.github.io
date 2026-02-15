@@ -22,7 +22,7 @@ export function Header() {
   const navLinks = [
     { path: '/', label: t('nav.home') },
     { path: '/about', label: t('nav.about') },
-    { path: '/spotlight', label: t('nav.spotlight') },
+    ...(isAuthenticated ? [{ path: '/spotlight', label: t('nav.spotlight') }] : []),
   ]
 
   const isActive = (path: string) => location.pathname === path
@@ -38,11 +38,13 @@ export function Header() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">L</span>
-            </div>
+            <img
+              src="/images/lapidim-logo.jpeg"
+              alt="Lapidim Logo"
+              className="w-10 h-10 rounded-lg object-cover"
+            />
             <span className="font-semibold text-xl text-white">
-              Lapidim Alumni
+              Lapidim Program Alumni
             </span>
           </Link>
 
