@@ -36,6 +36,5 @@ Thumbs.db
 supabase/functions/
 supabase/migrations/
 supabase/seed.sql
-supabase/schema.sql
 supabase/storage/
 supabase/storage/
