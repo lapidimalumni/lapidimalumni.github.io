@@ -33,7 +33,6 @@ Thumbs.db
 .claude/
 
 # Supabase files that don't need to be committed
-supabase/functions/
 supabase/migrations/
 supabase/seed.sql
 supabase/storage/
