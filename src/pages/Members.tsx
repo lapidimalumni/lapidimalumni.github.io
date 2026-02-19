@@ -10,7 +10,7 @@ const SESSION_KEY = 'session_token'
 
 export function Members() {
   const { language, t } = useLanguage()
-  const { user, isAuthenticated, isAdmin, isLoading } = useAuth()
+  const { user, isAuthenticated, isAdmin, isLoading, communityLinks } = useAuth()
   const [emailNotifications, setEmailNotifications] = useState(user?.email_updates ?? false)
 
   const handleToggleEmail = async () => {
@@ -257,7 +257,7 @@ export function Members() {
                   </div>
                 </div>
                 <a
-                  href="https://chat.whatsapp.com/I0rmZx1z6dq9RAD4BakOop"
+                  href={communityLinks?.whatsapp ?? '#'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full bg-green-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
@@ -280,7 +280,7 @@ export function Members() {
                   </div>
                 </div>
                 <a
-                  href="https://www.facebook.com/groups/1212025383881223"
+                  href={communityLinks?.facebook ?? '#'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full bg-blue-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"

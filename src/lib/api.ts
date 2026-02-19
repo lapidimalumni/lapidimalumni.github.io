@@ -1,6 +1,11 @@
 import { supabase } from './supabase'
 import { User } from '../types/user'
 
+export interface CommunityLinks {
+  whatsapp: string
+  facebook: string
+}
+
 interface ApiResponse<T = unknown> {
   data?: T
   error?: string
@@ -18,11 +23,11 @@ export async function sendMagicLink(email: string): Promise<ApiResponse> {
   return invoke('send-magic-link', { email })
 }
 
-export async function verifyMagicLink(token: string): Promise<ApiResponse<{ session_token: string; user: User }>> {
+export async function verifyMagicLink(token: string): Promise<ApiResponse<{ session_token: string; user: User; community_links: CommunityLinks }>> {
   return invoke('verify-magic-link', { token })
 }
 
-export async function getSession(sessionToken: string): Promise<ApiResponse<{ user: User }>> {
+export async function getSession(sessionToken: string): Promise<ApiResponse<{ user: User; community_links: CommunityLinks }>> {
   return invoke('get-session', { session_token: sessionToken })
 }
 

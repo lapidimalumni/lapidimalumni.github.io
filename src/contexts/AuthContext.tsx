@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react'
 import { User } from '../types/user'
+import { CommunityLinks } from '../lib/api'
 import * as api from '../lib/api'
 
 interface AuthContextType {
@@ -7,6 +8,7 @@ interface AuthContextType {
   isAuthenticated: boolean
   isAdmin: boolean
   isLoading: boolean
+  communityLinks: CommunityLinks | null
   sendMagicLink: (email: string) => Promise<{ error?: string }>
   verifyToken: (token: string) => Promise<{ error?: string }>
   logout: () => Promise<void>
@@ -18,6 +20,7 @@ const SESSION_KEY = 'session_token'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
+  const [communityLinks, setCommunityLinks] = useState<CommunityLinks | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   const validateSession = useCallback(async () => {
@@ -30,6 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const result = await api.getSession(token)
     if (result.data?.user) {
       setUser(result.data.user)
+      setCommunityLinks(result.data.community_links ?? null)
     } else {
       localStorage.removeItem(SESSION_KEY)
     }
@@ -56,6 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (result.data) {
       localStorage.setItem(SESSION_KEY, result.data.session_token)
       setUser(result.data.user)
+      setCommunityLinks(result.data.community_links ?? null)
     }
     return {}
   }
@@ -67,6 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     localStorage.removeItem(SESSION_KEY)
     setUser(null)
+    setCommunityLinks(null)
   }
 
   return (
@@ -75,6 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isAuthenticated: !!user,
       isAdmin: user?.role === 'admin',
       isLoading,
+      communityLinks,
       sendMagicLink,
       verifyToken,
       logout,
