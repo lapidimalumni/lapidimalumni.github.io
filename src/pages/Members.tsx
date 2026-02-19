@@ -1,26 +1,31 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 import { useAuth } from '../hooks/useAuth'
 import { generateLinkedInCertUrl } from '../utils/certificate'
+import { toggleEmailUpdates } from '../lib/api'
 import { events } from '../data/events'
+
+const SESSION_KEY = 'session_token'
 
 export function Members() {
   const { language, t } = useLanguage()
-  const { user, isAuthenticated } = useAuth()
-  const [emailNotifications, setEmailNotifications] = useState(() => {
-    return localStorage.getItem('emailNotifications') === 'true'
-  })
+  const { user, isAuthenticated, isAdmin, isLoading } = useAuth()
+  const [emailNotifications, setEmailNotifications] = useState(user?.email_updates ?? false)
 
-  useEffect(() => {
-    localStorage.setItem('emailNotifications', String(emailNotifications))
-  }, [emailNotifications])
+  const handleToggleEmail = async () => {
+    const newValue = !emailNotifications
+    setEmailNotifications(newValue)
+    const sessionToken = localStorage.getItem(SESSION_KEY) || ''
+    await toggleEmailUpdates(sessionToken, newValue)
+  }
 
+  if (isLoading) return null
   if (!isAuthenticated || !user) {
     return <Navigate to="/login" replace />
   }
 
-  const userName = language === 'he' ? user.nameHe : user.name
+  const userName = language === 'he' ? user.full_name_he : user.full_name_en
   const upcomingEvents = events.filter(e => e.type === 'upcoming')
   const domain = window.location.host
   const linkedInUrl = generateLinkedInCertUrl(user, domain)
@@ -40,17 +45,12 @@ export function Members() {
       {/* Hero Section */}
       <section className="bg-slate-900 pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-amber-500 text-slate-900 px-4 py-2 rounded-full text-sm font-semibold mb-8">
             {t('members.badge')}
           </div>
-
-          {/* Title */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 max-w-3xl">
             {t('members.welcome')} {userName}
           </h1>
-
-          {/* Description */}
           <p className="text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed">
             {t('members.subtitle')}
           </p>
@@ -63,7 +63,6 @@ export function Members() {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Left Column - Events */}
             <div className="lg:col-span-2 space-y-8">
-              {/* Upcoming Events */}
               <div>
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-2xl font-serif text-slate-900">{t('members.events.upcoming')}</h2>
@@ -130,17 +129,36 @@ export function Members() {
                   </div>
                 )}
               </div>
-
             </div>
 
             {/* Right Column - Sidebar */}
             <div className="space-y-6">
+              {/* Admin Link (admin only) */}
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className="flex items-center gap-3 bg-slate-900 text-white rounded-xl p-4 hover:bg-slate-800 transition-colors"
+                >
+                  <div className="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-sm">{t('nav.admin')}</div>
+                    <div className="text-xs text-white/60">{t('admin.manage')}</div>
+                  </div>
+                  <svg className="w-4 h-4 ml-auto text-white/40 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              )}
+
               {/* Spotlight CTA Card */}
               <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-orange-500 p-6 shadow-lg">
-                {/* Decorative elements */}
                 <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
                 <div className="absolute bottom-0 left-0 -mb-4 -ml-4 w-32 h-32 bg-orange-600/20 rounded-full blur-2xl"></div>
-
                 <div className="relative">
                   <div className="flex items-center gap-2 mb-3">
                     <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -148,17 +166,10 @@ export function Members() {
                     </svg>
                     <span className="text-white/90 text-sm font-medium">{t('members.spotlight.label')}</span>
                   </div>
-
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    {t('members.spotlight.title')}
-                  </h3>
-
-                  <p className="text-white/80 text-sm mb-4 leading-relaxed">
-                    {t('members.spotlight.text')}
-                  </p>
-
+                  <h3 className="text-xl font-bold text-white mb-2">{t('members.spotlight.title')}</h3>
+                  <p className="text-white/80 text-sm mb-4 leading-relaxed">{t('members.spotlight.text')}</p>
                   <Link
-                    to="#"
+                    to="/spotlight"
                     className="inline-flex items-center gap-2 bg-white text-amber-600 px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-amber-50 transition-colors shadow-md"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,7 +190,7 @@ export function Members() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-slate-900">{t('members.certificate.title')}</h3>
-                    <p className="text-xs text-slate-500">{t('members.certificate.id')} {user.certId}</p>
+                    <p className="text-xs text-slate-500">{t('members.certificate.id')} {user.certificate_id}</p>
                   </div>
                 </div>
                 <div className="space-y-3">
@@ -195,7 +206,7 @@ export function Members() {
                     {t('members.certificate.addLinkedIn')}
                   </a>
                   <Link
-                    to={`/verify/${user.certId}`}
+                    to={`/verify/${user.certificate_id}`}
                     className="flex items-center justify-center gap-2 w-full bg-stone-100 text-slate-700 py-2.5 rounded-lg text-sm font-medium hover:bg-stone-200 transition-colors"
                   >
                     {t('members.certificate.view')}
@@ -218,7 +229,7 @@ export function Members() {
                     </div>
                   </div>
                   <button
-                    onClick={() => setEmailNotifications(!emailNotifications)}
+                    onClick={handleToggleEmail}
                     className={`relative w-12 h-6 rounded-full transition-colors ${
                       emailNotifications ? 'bg-emerald-500' : 'bg-slate-300'
                     }`}
@@ -245,12 +256,60 @@ export function Members() {
                     <p className="text-xs text-slate-500">{t('members.whatsapp.desc')}</p>
                   </div>
                 </div>
-                <Link
-                  to="#"
+                <a
+                  href="https://chat.whatsapp.com/I0rmZx1z6dq9RAD4BakOop"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full bg-green-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
                 >
                   {t('members.whatsapp.button')}
-                </Link>
+                </a>
+              </div>
+
+              {/* Facebook Card */}
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                    <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900">{t('members.facebook.title')}</h3>
+                    <p className="text-xs text-slate-500">{t('members.facebook.desc')}</p>
+                  </div>
+                </div>
+                <a
+                  href="https://www.facebook.com/groups/1212025383881223"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full bg-blue-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                >
+                  {t('members.facebook.button')}
+                </a>
+              </div>
+
+              {/* LinkedIn Group Card */}
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center">
+                    <svg className="w-6 h-6 text-sky-700" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900">{t('members.linkedin.group.title')}</h3>
+                    <p className="text-xs text-slate-500">{t('members.linkedin.group.desc')}</p>
+                  </div>
+                </div>
+                <a
+                  href="https://www.linkedin.com/company/lapidim-program-alumni/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full bg-sky-700 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-sky-800 transition-colors"
+                >
+                  {t('members.linkedin.group.button')}
+                </a>
               </div>
 
               {/* Quick Links */}

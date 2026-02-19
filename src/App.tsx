@@ -5,17 +5,33 @@ import { About } from './pages/About'
 import { Spotlight } from './pages/Spotlight'
 import { Login } from './pages/Login'
 import { Members } from './pages/Members'
+import { Admin } from './pages/Admin'
 import { CertificateVerify } from './pages/CertificateVerify'
 import { useAuth } from './hooks/useAuth'
 
 function ProtectedSpotlight() {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, isLoading } = useAuth()
 
+  if (isLoading) return null
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
   }
 
   return <Spotlight />
+}
+
+function ProtectedAdmin() {
+  const { isAuthenticated, isAdmin, isLoading } = useAuth()
+
+  if (isLoading) return null
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
+  }
+  if (!isAdmin) {
+    return <Navigate to="/members" replace />
+  }
+
+  return <Admin />
 }
 
 function App() {
@@ -28,6 +44,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/auth" element={<Login />} />
         <Route path="/members" element={<Members />} />
+        <Route path="/admin" element={<ProtectedAdmin />} />
         <Route path="/verify/:certId" element={<CertificateVerify />} />
       </Routes>
     </Layout>

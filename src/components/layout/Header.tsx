@@ -6,7 +6,7 @@ import { LanguageToggle } from '../ui/LanguageToggle'
 
 export function Header() {
   const { t } = useLanguage()
-  const { isAuthenticated, logout } = useAuth()
+  const { isAuthenticated, isAdmin, logout } = useAuth()
   const location = useLocation()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -75,6 +75,18 @@ export function Header() {
                 {t('nav.members')}
               </Link>
             )}
+            {isAdmin && (
+              <Link
+                to="/admin"
+                className={`text-sm font-medium transition-colors ${
+                  isActive('/admin')
+                    ? 'text-amber-400'
+                    : 'text-white/80 hover:text-white'
+                }`}
+              >
+                {t('nav.admin')}
+              </Link>
+            )}
           </nav>
 
           {/* Right Side */}
@@ -84,7 +96,7 @@ export function Header() {
             {/* Auth Button */}
             {isAuthenticated ? (
               <button
-                onClick={logout}
+                onClick={() => logout()}
                 className="hidden md:block text-sm font-medium text-white/80 hover:text-white"
               >
                 {t('nav.logout')}
@@ -157,6 +169,15 @@ export function Header() {
                   >
                     {t('nav.members')}
                   </Link>
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      className="text-sm font-medium text-white/80"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {t('nav.admin')}
+                    </Link>
+                  )}
                   <button
                     onClick={() => {
                       logout()

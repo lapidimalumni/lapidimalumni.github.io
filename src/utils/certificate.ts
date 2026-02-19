@@ -1,41 +1,43 @@
-import { mockUsers, MockUser } from '../data/mockUsers'
+import { User } from '../types/user'
+import { verifyCertificateApi } from '../lib/api'
 
 export interface CertificateData {
   certId: string
   holderName: string
   holderNameHe: string
-  cohortYear: number
+  cohortStart: number
+  cohortEnd: number
   issueDate: string
   isValid: boolean
 }
 
-export function verifyCertificate(certId: string): CertificateData | null {
-  const user = mockUsers.find(u => u.certId === certId)
+export async function verifyCertificate(certId: string): Promise<CertificateData | null> {
+  const result = await verifyCertificateApi(certId)
 
-  if (!user) {
+  if (result.error || !result.data) {
     return null
   }
 
+  const d = result.data
   return {
-    certId: user.certId,
-    holderName: user.name,
-    holderNameHe: user.nameHe,
-    cohortYear: user.cohortYear,
-    issueDate: user.certIssueDate,
+    certId: d.certificate_id,
+    holderName: d.full_name_en,
+    holderNameHe: d.full_name_he,
+    cohortStart: d.cohort_start,
+    cohortEnd: d.cohort_end,
+    issueDate: d.created_at,
     isValid: true,
   }
 }
 
-export function generateLinkedInCertUrl(user: MockUser, domain: string): string {
-  const issueDate = new Date(user.certIssueDate)
-  // Get base path from Vite config (set during build)
-  const basePath = import.meta.env.BASE_URL || '/'
+export function generateLinkedInCertUrl(user: User, domain: string): string {
+  const issueDate = new Date(user.created_at)
   const params = new URLSearchParams({
     startTask: 'CERTIFICATION_NAME',
     name: 'Lapidim Excellence Program Alumni',
     organizationName: 'Lapidim Program Alumni',
-    certId: user.certId,
-    certUrl: `https://${domain}${basePath}#/verify/${user.certId}`,
+    certId: user.certificate_id,
+    certUrl: `https://${domain}/verify/${user.certificate_id}`,
     issueMonth: String(issueDate.getMonth() + 1),
     issueYear: String(issueDate.getFullYear()),
   })

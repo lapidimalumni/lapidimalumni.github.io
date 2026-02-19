@@ -1,67 +1,83 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import { mockUsers, MockUser } from '../data/mockUsers'
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react'
+import { User } from '../types/user'
+import * as api from '../lib/api'
 
 interface AuthContextType {
-  user: MockUser | null
+  user: User | null
   isAuthenticated: boolean
-  login: (email: string) => boolean
-  loginWithToken: (token: string) => boolean
-  logout: () => void
-  checkEmail: (email: string) => MockUser | undefined
+  isAdmin: boolean
+  isLoading: boolean
+  sendMagicLink: (email: string) => Promise<{ error?: string }>
+  verifyToken: (token: string) => Promise<{ error?: string }>
+  logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<MockUser | null>(null)
+const SESSION_KEY = 'session_token'
 
-  useEffect(() => {
-    const savedUser = localStorage.getItem('authUser')
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser))
-      } catch {
-        localStorage.removeItem('authUser')
-      }
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  const validateSession = useCallback(async () => {
+    const token = localStorage.getItem(SESSION_KEY)
+    if (!token) {
+      setIsLoading(false)
+      return
     }
+
+    const result = await api.getSession(token)
+    if (result.data?.user) {
+      setUser(result.data.user)
+    } else {
+      localStorage.removeItem(SESSION_KEY)
+    }
+    setIsLoading(false)
   }, [])
 
-  const checkEmail = (email: string): MockUser | undefined => {
-    return mockUsers.find(u => u.email.toLowerCase() === email.toLowerCase())
-  }
+  useEffect(() => {
+    validateSession()
+  }, [validateSession])
 
-  const login = (email: string): boolean => {
-    const foundUser = checkEmail(email)
-    if (foundUser) {
-      setUser(foundUser)
-      localStorage.setItem('authUser', JSON.stringify(foundUser))
-      return true
+  const sendMagicLink = async (email: string): Promise<{ error?: string }> => {
+    const result = await api.sendMagicLink(email)
+    if (result.error) {
+      return { error: result.error }
     }
-    return false
+    return {}
   }
 
-  const loginWithToken = (token: string): boolean => {
-    try {
-      const email = atob(token)
-      return login(email)
-    } catch {
-      return false
+  const verifyToken = async (token: string): Promise<{ error?: string }> => {
+    const result = await api.verifyMagicLink(token)
+    if (result.error) {
+      return { error: result.error }
     }
+    if (result.data) {
+      localStorage.setItem(SESSION_KEY, result.data.session_token)
+      setUser(result.data.user)
+    }
+    return {}
   }
 
-  const logout = () => {
+  const logout = async () => {
+    const token = localStorage.getItem(SESSION_KEY)
+    if (token) {
+      await api.logoutSession(token)
+    }
+    localStorage.removeItem(SESSION_KEY)
     setUser(null)
-    localStorage.removeItem('authUser')
   }
 
   return (
     <AuthContext.Provider value={{
       user,
       isAuthenticated: !!user,
-      login,
-      loginWithToken,
+      isAdmin: user?.role === 'admin',
+      isLoading,
+      sendMagicLink,
+      verifyToken,
       logout,
-      checkEmail,
     }}>
       {children}
     </AuthContext.Provider>

@@ -26,7 +26,7 @@ export function CertificateLink() {
           <div className="flex-1">
             <h3 className="font-bold text-gray-900 mb-1">{t('members.certificate.title')}</h3>
             <p className="text-sm text-gray-500 mb-4">
-              Certificate ID: {user.certId}
+              Certificate ID: {user.certificate_id}
             </p>
             <div className="flex flex-wrap gap-3">
               <a
@@ -41,7 +41,7 @@ export function CertificateLink() {
                   {t('members.certificate.add')}
                 </Button>
               </a>
-              <Link to={`/verify/${user.certId}`}>
+              <Link to={`/verify/${user.certificate_id}`}>
                 <Button variant="secondary" size="sm">
                   {t('members.certificate.view')}
                 </Button>

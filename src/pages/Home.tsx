@@ -1,10 +1,17 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
+import { TurnstileWidget } from '../components/features/TurnstileWidget'
+import { submitContactForm } from '../lib/api'
 
 export function Home() {
   const { t } = useLanguage()
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const [contactStatus, setContactStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [contactError, setContactError] = useState('')
+  const [showCaptcha, setShowCaptcha] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const submissionCount = useRef(0)
 
   const stats = [
     {
@@ -66,17 +73,49 @@ export function Home() {
     },
   ]
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    alert('Message sent! (Demo)')
+
+    if (showCaptcha && !turnstileToken) {
+      setContactError(t('home.contact.captchaRequired'))
+      setContactStatus('error')
+      return
+    }
+
+    setContactStatus('sending')
+    setContactError('')
+
+    const result = await submitContactForm({
+      ...formData,
+      turnstile_token: turnstileToken || undefined,
+    })
+
+    if (result.error) {
+      setContactStatus('error')
+      setContactError(result.error)
+      return
+    }
+
+    if (result.data?.captcha_required) {
+      setShowCaptcha(true)
+      setContactStatus('idle')
+      return
+    }
+
+    submissionCount.current += 1
+    if (submissionCount.current >= 2) {
+      setShowCaptcha(true)
+    }
+
+    setContactStatus('success')
     setFormData({ name: '', email: '', message: '' })
+    setTurnstileToken(null)
   }
 
   return (
     <div className="overflow-hidden">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center">
-        {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <img
             src="https://images.unsplash.com/photo-1562774053-701939374585?w=1920&h=1080&fit=crop"
@@ -86,26 +125,21 @@ export function Home() {
           <div className="absolute inset-0 bg-slate-900/80"></div>
         </div>
 
-        {/* Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
           <div className="max-w-2xl">
-            {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 text-amber-400 px-4 py-2 rounded-full text-sm font-medium mb-8">
               {t('home.hero.badge')}
             </div>
 
-            {/* Heading */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
               {t('home.hero.title1')}{' '}
               <span className="text-amber-400 font-serif italic">{t('home.hero.title2')}</span>
             </h1>
 
-            {/* Description */}
             <p className="text-lg md:text-xl text-white/70 mb-10 max-w-xl leading-relaxed">
               {t('home.hero.description')}
             </p>
 
-            {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 to="/about"
@@ -125,7 +159,6 @@ export function Home() {
             </div>
           </div>
 
-          {/* Stats */}
           <div className="mt-20 grid grid-cols-2 gap-8 max-w-md">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
@@ -143,7 +176,6 @@ export function Home() {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
           <div className="w-8 h-12 border-2 border-amber-400/50 rounded-full flex items-start justify-center p-2">
             <div className="w-1.5 h-3 bg-amber-400 rounded-full animate-bounce"></div>
@@ -155,7 +187,6 @@ export function Home() {
       <section className="py-24 bg-stone-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Image */}
             <div className="relative">
               <img
                 src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&h=600&fit=crop"
@@ -164,7 +195,6 @@ export function Home() {
               />
             </div>
 
-            {/* Content */}
             <div>
               <span className="text-amber-600 font-semibold tracking-wider text-sm uppercase">
                 {t('home.mission.label')}
@@ -176,7 +206,6 @@ export function Home() {
                 {t('home.mission.text')}
               </p>
 
-              {/* Values Grid */}
               <div className="grid grid-cols-2 gap-6">
                 {values.map((value, index) => (
                   <div key={index} className="flex items-start gap-4">
@@ -198,7 +227,6 @@ export function Home() {
       {/* Contact Section */}
       <section className="py-24 bg-stone-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
           <div className="text-center mb-16">
             <span className="text-amber-600 font-semibold tracking-wider text-sm uppercase">
               {t('home.contact.label')}
@@ -211,7 +239,6 @@ export function Home() {
             </p>
           </div>
 
-          {/* Contact Cards */}
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Contact Info */}
             <div className="bg-white rounded-xl p-8 shadow-sm">
@@ -248,59 +275,88 @@ export function Home() {
             <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
               <h3 className="text-xl font-semibold text-slate-900 mb-6">{t('home.contact.form')}</h3>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-900 mb-2">
-                    {t('home.contact.name')}
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder={t('home.contact.namePlaceholder')}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-                    required
-                  />
+              {contactStatus === 'success' ? (
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 text-center">
+                  <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h4 className="font-semibold text-emerald-800 mb-1">{t('home.contact.success')}</h4>
+                  <p className="text-sm text-emerald-600">{t('home.contact.success.text')}</p>
+                  <button
+                    onClick={() => setContactStatus('idle')}
+                    className="mt-4 text-sm text-emerald-700 underline hover:no-underline"
+                  >
+                    {t('home.contact.sendAnother')}
+                  </button>
                 </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-slate-900 mb-2">
+                      {t('home.contact.name')}
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder={t('home.contact.namePlaceholder')}
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                      required
+                    />
+                  </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-900 mb-2">
-                    {t('login.email')}
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder={t('home.contact.emailPlaceholder')}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-                    required
-                  />
-                </div>
+                  <div>
+                    <label htmlFor="contactEmail" className="block text-sm font-medium text-slate-900 mb-2">
+                      {t('login.email')}
+                    </label>
+                    <input
+                      type="email"
+                      id="contactEmail"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder={t('home.contact.emailPlaceholder')}
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                      required
+                    />
+                  </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-900 mb-2">
-                    {t('home.contact.message')}
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={4}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder={t('home.contact.messagePlaceholder')}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors resize-none"
-                    required
-                  ></textarea>
-                </div>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-slate-900 mb-2">
+                      {t('home.contact.message')}
+                    </label>
+                    <textarea
+                      id="message"
+                      rows={4}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder={t('home.contact.messagePlaceholder')}
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors resize-none"
+                      required
+                    ></textarea>
+                  </div>
 
-                <button
-                  type="submit"
-                  className="w-full bg-slate-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-slate-800 transition-colors"
-                >
-                  {t('home.contact.send')}
-                </button>
-              </form>
+                  {showCaptcha && (
+                    <TurnstileWidget onVerify={setTurnstileToken} />
+                  )}
+
+                  {contactStatus === 'error' && contactError && (
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                      <p className="text-sm text-red-600">{contactError}</p>
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={contactStatus === 'sending'}
+                    className="w-full bg-slate-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-slate-800 transition-colors disabled:opacity-60"
+                  >
+                    {contactStatus === 'sending' ? t('common.loading') : t('home.contact.send')}
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>
