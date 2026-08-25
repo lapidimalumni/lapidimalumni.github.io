@@ -118,7 +118,7 @@ export function Home() {
       <section className="relative min-h-screen flex items-center">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1562774053-701939374585?w=1920&h=1080&fit=crop"
+            src="/images/campus-hero.jpg"
             alt="Technion Campus"
             className="w-full h-full object-cover"
           />
@@ -189,8 +189,8 @@ export function Home() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&h=600&fit=crop"
-                alt="Alumni networking"
+                src="/images/campus-rainbow.jpg"
+                alt="Rainbow over the Technion Computer Science campus"
                 className="rounded-xl shadow-2xl w-full"
               />
             </div>

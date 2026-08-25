@@ -25,7 +25,7 @@ export const events: Event[] = [
     location: 'Taub Building, Technion',
     locationHe: 'בניין טאוב, טכניון',
     type: 'upcoming',
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=400&fit=crop',
+    image: '/images/events/alumni-gathering-2026.jpg',
     registrationLink: '#',
   },
 ]

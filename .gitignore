@@ -34,3 +34,5 @@ Thumbs.db
 
 # Supabase — kept local only
 supabase/
+# Original full-size photos (optimized copies live in public/images)
+/images/
