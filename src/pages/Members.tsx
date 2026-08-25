@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 import { useAuth } from '../hooks/useAuth'
@@ -12,6 +12,14 @@ export function Members() {
   const { language, t } = useLanguage()
   const { user, isAuthenticated, isAdmin, isLoading, communityLinks } = useAuth()
   const [emailNotifications, setEmailNotifications] = useState(user?.email_updates ?? false)
+
+  // The session is still loading on first render, so the state above initializes
+  // from a null user. Sync once the user arrives, keyed on id so a later toggle
+  // is not clobbered by the now-stale value on the context user object.
+  useEffect(() => {
+    setEmailNotifications(user?.email_updates ?? false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id])
 
   const handleToggleEmail = async () => {
     const newValue = !emailNotifications
