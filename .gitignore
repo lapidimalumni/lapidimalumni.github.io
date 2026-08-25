@@ -36,3 +36,6 @@ Thumbs.db
 supabase/
 # Original full-size photos (optimized copies live in public/images)
 /images/
+
+# Member roster spreadsheets — personal data, local only
+members_do_not_commit/
