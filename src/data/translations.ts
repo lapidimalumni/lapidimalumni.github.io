@@ -185,6 +185,7 @@ export const translations = {
     'members.events.upcoming.badge': 'Upcoming',
     'members.events.past.badge': 'Past Event',
     'members.events.register': 'Register Now',
+    'members.events.at': 'at',
     'members.events.none': 'No upcoming events at the moment.',
     'members.events.checkBack': 'Check back soon!',
 
@@ -447,6 +448,7 @@ export const translations = {
     'members.events.upcoming.badge': '\u05E7\u05E8\u05D5\u05D1',
     'members.events.past.badge': '\u05D0\u05D9\u05E8\u05D5\u05E2 \u05E7\u05D5\u05D3\u05DD',
     'members.events.register': '\u05D4\u05E8\u05E9\u05DE\u05D4',
+    'members.events.at': '\u05D1\u05E9\u05E2\u05D4',
     'members.events.none': '\u05D0\u05D9\u05DF \u05D0\u05D9\u05E8\u05D5\u05E2\u05D9\u05DD \u05E7\u05E8\u05D5\u05D1\u05D9\u05DD \u05DB\u05E8\u05D2\u05E2.',
     'members.events.checkBack': '\u05D1\u05D3\u05E7\u05D5 \u05E9\u05D5\u05D1 \u05D1\u05E7\u05E8\u05D5\u05D1!',
 
