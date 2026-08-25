@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback, ReactNode 
 import { User } from '../types/user'
 import { CommunityLinks } from '../lib/api'
 import * as api from '../lib/api'
+import { devAuthEnabled, devUser, devCommunityLinks } from '../lib/devAuth'
 
 interface AuthContextType {
   user: User | null
@@ -24,6 +25,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
 
   const validateSession = useCallback(async () => {
+    if (devAuthEnabled) {
+      setUser(devUser)
+      setCommunityLinks(devCommunityLinks)
+      setIsLoading(false)
+      return
+    }
+
     const token = localStorage.getItem(SESSION_KEY)
     if (!token) {
       setIsLoading(false)
