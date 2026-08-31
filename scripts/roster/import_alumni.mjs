@@ -4,7 +4,10 @@
  *   node scripts/roster/import_alumni.mjs --dry-run
  *   node scripts/roster/import_alumni.mjs
  *
- * Input:  members_do_not_commit/import_review.csv  (from extract_roster.py)
+ * Rows still marked needs_review=yes stop the run; --allow-unreviewed overrides.
+ *
+ * Input:  members_do_not_commit/import_review.csv  (from extract_roster.py,
+ *         then enrich_from_site.py)
  * Needs:  LAPIDIM_ADMIN_TOKEN -- your admin session token. Log in to the site
  *         as the admin, then in DevTools console:  localStorage.session_token
  *         Pass it as an env var, do not paste it into a file:
@@ -27,6 +30,7 @@ const FAILURES = path.join(ROSTER_DIR, 'import_failures.csv')
 const DELAY_MS = 150
 
 const dryRun = process.argv.includes('--dry-run')
+const allowUnreviewed = process.argv.includes('--allow-unreviewed')
 
 function readEnvFile(file) {
   if (!fs.existsSync(file)) return {}
@@ -90,10 +94,17 @@ if (problems.length) {
   process.exit(1)
 }
 
-const stillFlagged = rows.filter(r => r.needs_review === 'yes').length
-if (stillFlagged && !dryRun) {
-  console.warn(`warning: ${stillFlagged} row(s) still have needs_review=yes.`)
-  console.warn('These names go onto certificates. Ctrl+C now if you have not reviewed them.\n')
+// These names get printed on certificates, so an unreviewed row is a hard stop
+// rather than a warning that scrolls past.
+const flagged = rows.filter(r => r.needs_review === 'yes')
+if (flagged.length && !dryRun && !allowUnreviewed) {
+  console.error(`${flagged.length} of ${rows.length} row(s) still have needs_review=yes, for example:`)
+  for (const r of flagged.slice(0, 5)) {
+    console.error(`    ${r.full_name_he}  ->  ${r.full_name_en}`)
+  }
+  console.error('\nFix full_name_en for those rows and set needs_review=no.')
+  console.error('To import anyway: --allow-unreviewed')
+  process.exit(1)
 }
 
 const pending = rows.filter(r => !done.has(r.email))
