@@ -77,6 +77,14 @@ export function Footer() {
           {/* Technion */}
           <div>
             <h3 className="text-white font-semibold mb-6">{t('footer.technion')}</h3>
+            {/* Reversed (white) faculty mark -- the footer is always dark.
+                Sized by width, not height: this column is ~270px at lg but
+                only ~145px at md, and a fixed height would overflow it. */}
+            <img
+              src={language === 'he' ? '/images/taub-cs-white-he.png' : '/images/taub-cs-white-en.png'}
+              alt={t('footer.taubFaculty')}
+              className="w-full max-w-[200px] h-auto mb-6 opacity-90"
+            />
             <ul className="space-y-3">
               <li>
                 <a

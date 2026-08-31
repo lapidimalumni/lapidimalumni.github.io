@@ -154,6 +154,14 @@ export function CertificateVerify() {
                   <span className="font-semibold text-slate-900">{t('cert.network')}</span>
                 </div>
                 <p className="text-xs text-slate-500">{t('cert.technion')}</p>
+                {/* This page is what an outside verifier sees, so the issuing
+                    faculty is named with its own mark rather than text alone.
+                    Sized by width so it shrinks inside the card on a phone. */}
+                <img
+                  src={language === 'he' ? '/images/technion-taub-cs-he.png' : '/images/technion-taub-cs-en.png'}
+                  alt={t('cert.technion')}
+                  className="w-full max-w-[320px] h-auto mx-auto mt-5"
+                />
               </div>
             </div>
           </div>
