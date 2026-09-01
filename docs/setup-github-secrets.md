@@ -10,14 +10,14 @@ Before starting, make sure you have these values ready from the other setup guid
 |---|---|---|
 | `VITE_SUPABASE_URL` | Supabase dashboard → Settings → API → Project URL | `https://dupporsigycwuwdlvqhw.supabase.co` |
 | `VITE_SUPABASE_PUBLISHABLE_KEY` | Supabase dashboard → Settings → API Keys → Publishable key | `sb_publishable__TrlhAXNim4...` |
-| `VITE_SITE_DOMAIN` | Your GitHub Pages domain | `lapidim-alumni.github.io` |
+| `VITE_SITE_DOMAIN` | The domain the site is served from | `lapidim-alumni.org` |
 | `VITE_TURNSTILE_SITE_KEY` | Cloudflare dashboard → Turnstile → your site → Site Key | `0x4AAAAAAAxxxxxxxx` |
 
 ## Step-by-Step
 
 ### 1. Navigate to Repository Settings
 
-1. Go to your GitHub repository: `https://github.com/YOUR_ORG/lapidim-alumni-code`
+1. Go to your GitHub repository: `https://github.com/YOUR_ORG/lapidimalumni-code`
 2. Click the **Settings** tab (you need admin/owner access)
 3. In the left sidebar, expand **Secrets and variables**
 4. Click **Actions**
@@ -58,15 +58,15 @@ Where to find it:
 ### 5. Add `VITE_SITE_DOMAIN`
 
 - **Name**: `VITE_SITE_DOMAIN`
-- **Value**: Your GitHub Pages domain (without `https://`)
+- **Value**: the domain the site is served from, without `https://`
 
-Examples:
-- If your site is at `https://lapidim-alumni.github.io` → value is `lapidim-alumni.github.io`
-- If you have a custom domain like `alumni.lapidim.org` → value is `alumni.lapidim.org`
+For this project that is the custom domain, `lapidim-alumni.org` — not the
+`lapidimalumni.github.io` address it is published from. To check, go to the
+repo **Settings** → **Pages**; a custom domain is shown in the Custom domain
+box, and the site address appears under "Your site is live at...".
 
-To find your GitHub Pages domain:
-1. Go to your repo **Settings** → **Pages**
-2. The domain is shown under "Your site is published at..."
+> Keep this in step with the `SITE_DOMAIN` secret in Supabase, which is what
+> the login emails are actually built from. See `docs/setup-supabase.md`.
 
 ### 6. Add `VITE_TURNSTILE_SITE_KEY`
 

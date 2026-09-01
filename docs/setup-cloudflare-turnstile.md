@@ -18,7 +18,7 @@ Cloudflare Turnstile is a privacy-friendly CAPTCHA alternative used on the conta
 | Field | Value |
 |---|---|
 | **Site name** | `Lapidim Alumni` (any name — just for your reference) |
-| **Domain** | Your GitHub Pages domain, e.g., `lapidim-alumni.github.io` |
+| **Domain** | The domain the site is served from, e.g. `lapidim-alumni.org` |
 | **Widget mode** | **Managed** (recommended — auto-decides between invisible and visible challenge) |
 
 > **Tip**: For local development, also add `localhost` as a domain so Turnstile works on `localhost:5173`.
@@ -113,7 +113,9 @@ You can use the "always passes" keys for development to avoid solving challenges
 
 ### Widget shows on the wrong domain
 - Go to Cloudflare dashboard → Turnstile → your site → **Settings**
-- Add all domains where the widget should work (e.g., `localhost`, `lapidim-alumni.github.io`)
+- Add all domains where the widget should work (e.g., `localhost`, `lapidim-alumni.org`).
+  A widget only validates on hostnames listed here, so a site moving to a new
+  domain needs that domain added or the captcha starts failing.
 
 ### Want to disable Turnstile entirely
 If you don't want captcha protection, simply leave `VITE_TURNSTILE_SITE_KEY` empty in `.env`. The `TurnstileWidget` component checks for this and renders nothing if the key is missing. The Edge Function will still work — it just won't require captcha verification.

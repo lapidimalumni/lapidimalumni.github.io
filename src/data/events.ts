@@ -26,6 +26,6 @@ export const events: Event[] = [
     locationHe: 'בניין טאוב, טכניון',
     type: 'upcoming',
     image: '/images/events/alumni-gathering-2026.jpg',
-    registrationLink: '#',
+    registrationLink: 'https://docs.google.com/forms/d/e/1FAIpQLScPNvzFYVmivM_XkH9T-LFarxrmgXh6Y-Su9vggYaEnVotc8Q/viewform',
   },
 ]

@@ -113,10 +113,15 @@ supabase secrets set SB_SECRET_KEY=sb_secret_your-secret-key-here
 supabase secrets set GMAIL_USER=lapidim.alumni@gmail.com
 supabase secrets set GMAIL_APP_PASSWORD=your-16-char-app-password
 supabase secrets set TURNSTILE_SECRET_KEY=your-turnstile-secret-key-here
-supabase secrets set SITE_DOMAIN=your-github-pages-domain.github.io
+supabase secrets set SITE_DOMAIN=lapidim-alumni.org
 ```
 
 The `SB_SECRET_KEY` is the **Secret key** from step 2 (starts with `sb_secret_`). We use `SB_SECRET_KEY` instead of `SUPABASE_SECRET_KEY` because Supabase reserves the `SUPABASE_` prefix for internal use.
+
+`SITE_DOMAIN` is the domain login links point at — `send-magic-link` builds
+`https://$SITE_DOMAIN/login?token=...` when it sends the email. If the site
+moves, change it here, or every login email will keep naming the old domain.
+It takes effect on the next invocation; no redeploy needed.
 
 Replace the other values with your actual keys (see the Gmail and Cloudflare setup guides for how to get those).
 
@@ -154,7 +159,7 @@ Open `.env` in the project root and fill in your values:
 ```
 VITE_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
 VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_your-publishable-key-here
-VITE_SITE_DOMAIN=your-github-pages-domain.github.io
+VITE_SITE_DOMAIN=lapidim-alumni.org
 VITE_TURNSTILE_SITE_KEY=your-turnstile-site-key-here
 ```
 
