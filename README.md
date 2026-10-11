@@ -53,6 +53,7 @@ Follow the guides in `docs/` in this order:
 2. `docs/setup-gmail.md` — Create a Gmail App Password for sending emails
 3. `docs/setup-cloudflare-turnstile.md` — Set up the captcha widget
 4. `docs/setup-github-secrets.md` — Add secrets to GitHub for CI/CD
+5. `docs/setup-email.md` — Optional: @lapidim-alumni.org addresses via Cloudflare
 
 ### Local Development
 
