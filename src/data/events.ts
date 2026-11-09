@@ -2,6 +2,7 @@ export interface Event {
   id: string
   published: boolean
   recapLink?: string
+  feedbackLink?: string
   title: string
   titleHe: string
   description: string
@@ -28,6 +29,7 @@ export interface EventRow {
   image: string
   registration_link: string | null
   recap_link: string | null
+  feedback_link: string | null
   published: boolean
 }
 
@@ -45,6 +47,7 @@ export function eventFromRow(r: EventRow): Event {
     image: r.image,
     registrationLink: r.registration_link || undefined,
     recapLink: r.recap_link || undefined,
+    feedbackLink: r.feedback_link || undefined,
     published: r.published,
   }
 }

@@ -207,12 +207,13 @@ serve(async (req) => {
 
       const registration_link = link(e?.registration_link)
       const recap_link = link(e?.recap_link)
+      const feedback_link = link(e?.feedback_link)
       const image = text(e?.image)
 
       if (!text(e?.title) || !text(e?.title_he) || !/^\d{4}-\d{2}-\d{2}$/.test(text(e?.event_date))) {
         return json({ error: 'Title (English and Hebrew) and a valid date are required' }, 400)
       }
-      if (registration_link === undefined || recap_link === undefined) {
+      if (registration_link === undefined || recap_link === undefined || feedback_link === undefined) {
         return json({ error: 'Links must start with http:// or https://' }, 400)
       }
       if (image && !/^(https?:\/\/|\/)/i.test(image)) {
@@ -231,6 +232,7 @@ serve(async (req) => {
         image,
         registration_link,
         recap_link,
+        feedback_link,
         published: e.published !== false,
         updated_at: new Date().toISOString(),
       }

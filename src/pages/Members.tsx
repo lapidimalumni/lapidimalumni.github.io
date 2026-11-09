@@ -180,6 +180,16 @@ export function Members() {
                             {formatDate(event.date)}
                             {(language === 'he' ? event.locationHe : event.location) && ` · ${language === 'he' ? event.locationHe : event.location}`}
                           </div>
+                          {event.feedbackLink && (
+                            <a
+                              href={event.feedbackLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-4 w-full bg-slate-900 text-white py-2 rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors block text-center"
+                            >
+                              {t('members.events.feedback')}
+                            </a>
+                          )}
                           {event.recapLink && (
                             <a
                               href={event.recapLink}

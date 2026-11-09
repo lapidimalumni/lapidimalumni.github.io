@@ -146,6 +146,7 @@ CREATE TABLE IF NOT EXISTS events (
   image TEXT NOT NULL DEFAULT '',
   registration_link TEXT,
   recap_link TEXT,
+  feedback_link TEXT,
   published BOOLEAN NOT NULL DEFAULT TRUE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -166,3 +167,6 @@ SELECT
   '/images/events/alumni-gathering-2026.jpg',
   'https://docs.google.com/forms/d/e/1FAIpQLScPNvzFYVmivM_XkH9T-LFarxrmgXh6Y-Su9vggYaEnVotc8Q/viewform'
 WHERE NOT EXISTS (SELECT 1 FROM events);
+
+-- Migration for databases created before feedback links existed:
+ALTER TABLE events ADD COLUMN IF NOT EXISTS feedback_link TEXT;

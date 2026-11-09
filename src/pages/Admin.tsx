@@ -7,10 +7,11 @@ import { EventRow, isPastEvent } from '../data/events'
 
 const SESSION_KEY = 'session_token'
 
-type EventForm = Omit<EventRow, 'id' | 'registration_link' | 'recap_link'> & {
+type EventForm = Omit<EventRow, 'id' | 'registration_link' | 'recap_link' | 'feedback_link'> & {
   id?: string
   registration_link: string
   recap_link: string
+  feedback_link: string
 }
 
 const emptyEvent: EventForm = {
@@ -25,6 +26,7 @@ const emptyEvent: EventForm = {
   image: '',
   registration_link: '',
   recap_link: '',
+  feedback_link: '',
   published: true,
 }
 
@@ -158,7 +160,7 @@ export function Admin() {
 
   const startEditEvent = (ev: EventRow) => {
     setEventStatus(null)
-    setEventForm({ ...ev, registration_link: ev.registration_link || '', recap_link: ev.recap_link || '' })
+    setEventForm({ ...ev, registration_link: ev.registration_link || '', recap_link: ev.recap_link || '', feedback_link: ev.feedback_link || '' })
   }
 
   const eventInput = 'w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-amber-500 outline-none text-sm'
@@ -459,6 +461,11 @@ export function Admin() {
                         <label className={eventLabel}>{t('admin.events.recap')}</label>
                         <input className={eventInput} dir="ltr" type="url" placeholder="https://" value={eventForm.recap_link}
                           onChange={e => setEventForm({ ...eventForm, recap_link: e.target.value })} />
+                      </div>
+                      <div>
+                        <label className={eventLabel}>{t('admin.events.feedback')}</label>
+                        <input className={eventInput} dir="ltr" type="url" placeholder="https://" value={eventForm.feedback_link}
+                          onChange={e => setEventForm({ ...eventForm, feedback_link: e.target.value })} />
                       </div>
                       <label className="flex items-center gap-2 text-sm text-slate-900">
                         <input type="checkbox" checked={eventForm.published}

@@ -273,6 +273,9 @@ export const translations = {
     'admin.events.save': 'Save event',
     'admin.events.cancel': 'Cancel',
 
+    'members.events.feedback': 'Share your feedback',
+    'admin.events.feedback': 'Feedback link (survey - shown on past events)',
+
     // Footer
     'footer.description': 'Connecting excellence. The official alumni network of the Lapidim Excellence Program at the Technion \u2013 Israel Institute of Technology.',
     'footer.quickLinks': 'Quick Links',
@@ -563,6 +566,9 @@ export const translations = {
     'admin.events.published': '\u05D2\u05DC\u05D5\u05D9 \u05DC\u05D7\u05D1\u05E8\u05D9\u05DD',
     'admin.events.save': '\u05E9\u05DE\u05D9\u05E8\u05EA \u05D0\u05D9\u05E8\u05D5\u05E2',
     'admin.events.cancel': '\u05D1\u05D9\u05D8\u05D5\u05DC',
+
+    'members.events.feedback': '\u05E9\u05EA\u05E4\u05D5 \u05D0\u05D5\u05EA\u05E0\u05D5 \u05D1\u05DE\u05E9\u05D5\u05D1',
+    'admin.events.feedback': '\u05E7\u05D9\u05E9\u05D5\u05E8 \u05DC\u05DE\u05E9\u05D5\u05D1 (\u05E1\u05E7\u05E8 - \u05DE\u05D5\u05E6\u05D2 \u05D1\u05D0\u05D9\u05E8\u05D5\u05E2\u05D9 \u05E2\u05D1\u05E8)',
 
     // Footer
     'footer.description': '\u05DE\u05D7\u05D1\u05E8\u05D9\u05DD \u05DE\u05E6\u05D5\u05D9\u05E0\u05D5\u05EA. \u05E8\u05E9\u05EA \u05D4\u05D1\u05D5\u05D2\u05E8\u05D9\u05DD \u05D4\u05E8\u05E9\u05DE\u05D9\u05EA \u05E9\u05DC \u05EA\u05D5\u05DB\u05E0\u05D9\u05EA \u05D4\u05DE\u05E6\u05D5\u05D9\u05E0\u05D5\u05EA \u05DC\u05E4\u05D9\u05D3\u05D9\u05DD \u05D1\u05D8\u05DB\u05E0\u05D9\u05D5\u05DF \u2013 \u05DE\u05DB\u05D5\u05DF \u05D8\u05DB\u05E0\u05D5\u05DC\u05D5\u05D2\u05D9 \u05DC\u05D9\u05E9\u05E8\u05D0\u05DC.',
