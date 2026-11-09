@@ -176,3 +176,14 @@ Double-check that `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` in `.e
 
 ### Edge Functions can't access the database
 Make sure you set the `SUPABASE_SECRET_KEY` secret via `supabase secrets set`. The secret key (starts with `sb_secret_`) is different from the publishable key.
+
+## Events
+
+Events shown on the members page live in the `events` table and are managed from **Admin → Events** (add, edit, hide, delete). Upcoming vs. past is derived from the event date.
+
+If your database was created before events existed, run the `-- Events shown on the members page` block at the bottom of `supabase/schema.sql` in the SQL Editor (it also seeds the first conference), then redeploy the two functions that changed:
+
+```bash
+supabase functions deploy admin
+supabase functions deploy get-session
+```

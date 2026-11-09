@@ -1,5 +1,6 @@
 import { supabase } from './supabase'
 import { User } from '../types/user'
+import { Event, EventRow, eventFromRow } from '../data/events'
 
 export interface CommunityLinks {
   whatsapp: string
@@ -65,4 +66,10 @@ export async function adminAction(
   payload?: Record<string, unknown>
 ): Promise<ApiResponse<unknown>> {
   return invoke('admin', { session_token: sessionToken, action, ...payload })
+}
+
+export async function getEvents(sessionToken: string): Promise<{ events?: Event[]; error?: string }> {
+  const res = await invoke<{ events: EventRow[] }>('get-session', { session_token: sessionToken, action: 'list-events' })
+  if (res.error || !res.data) return { error: res.error || 'An error occurred' }
+  return { events: res.data.events.map(eventFromRow) }
 }

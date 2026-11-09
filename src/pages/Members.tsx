@@ -3,8 +3,9 @@ import { Navigate, Link } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 import { useAuth } from '../hooks/useAuth'
 import { generateLinkedInCertUrl } from '../utils/certificate'
-import { toggleEmailUpdates } from '../lib/api'
-import { events } from '../data/events'
+import { toggleEmailUpdates, getEvents } from '../lib/api'
+import { Event, devEvents, isPastEvent } from '../data/events'
+import { devAuthEnabled } from '../lib/devAuth'
 
 const SESSION_KEY = 'session_token'
 
@@ -21,6 +22,17 @@ export function Members() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id])
 
+  const [events, setEvents] = useState<Event[]>([])
+
+  useEffect(() => {
+    if (devAuthEnabled) {
+      setEvents(devEvents)
+      return
+    }
+    if (!user) return
+    getEvents(localStorage.getItem(SESSION_KEY) || '').then(r => r.events && setEvents(r.events))
+  }, [user?.id])
+
   const handleToggleEmail = async () => {
     const newValue = !emailNotifications
     setEmailNotifications(newValue)
@@ -34,12 +46,13 @@ export function Members() {
   }
 
   const userName = language === 'he' ? user.full_name_he : user.full_name_en
-  const upcomingEvents = events.filter(e => e.type === 'upcoming')
+  const upcomingEvents = events.filter(e => !isPastEvent(e))
+  const pastEvents = events.filter(isPastEvent).reverse()
   const domain = window.location.host
   const linkedInUrl = generateLinkedInCertUrl(user, domain)
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
+    const date = new Date(`${dateString}T00:00:00`)
     return date.toLocaleDateString(language === 'he' ? 'he-IL' : 'en-US', {
       weekday: 'long',
       year: 'numeric',
@@ -80,11 +93,13 @@ export function Members() {
                   <div className="grid md:grid-cols-2 gap-6">
                     {upcomingEvents.map(event => (
                       <div key={event.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                        <img
-                          src={event.image}
-                          alt={language === 'he' ? event.titleHe : event.title}
-                          className="w-full h-40 object-cover"
-                        />
+                        {event.image && (
+                          <img
+                            src={event.image}
+                            alt={language === 'he' ? event.titleHe : event.title}
+                            className="w-full h-40 object-cover"
+                          />
+                        )}
                         <div className="p-5">
                           <div className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs font-medium mb-3">
                             <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
@@ -137,6 +152,50 @@ export function Members() {
                   </div>
                 )}
               </div>
+
+              {pastEvents.length > 0 && (
+                <div>
+                  <h2 className="text-2xl font-serif text-slate-900 mb-6">{t('members.events.past')}</h2>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {pastEvents.map(event => (
+                      <div key={event.id} className="bg-white rounded-xl overflow-hidden shadow-sm">
+                        {event.image && (
+                          <img
+                            src={event.image}
+                            alt={language === 'he' ? event.titleHe : event.title}
+                            className="w-full h-40 object-cover grayscale-[40%]"
+                          />
+                        )}
+                        <div className="p-5">
+                          <div className="inline-flex items-center bg-slate-100 text-slate-600 px-2 py-1 rounded text-xs font-medium mb-3">
+                            {t('members.events.past.badge')}
+                          </div>
+                          <h3 className="font-semibold text-slate-900 mb-2">
+                            {language === 'he' ? event.titleHe : event.title}
+                          </h3>
+                          <p className="text-sm text-slate-500 mb-3 line-clamp-2">
+                            {language === 'he' ? event.descriptionHe : event.description}
+                          </p>
+                          <div className="text-sm text-slate-500">
+                            {formatDate(event.date)}
+                            {(language === 'he' ? event.locationHe : event.location) && ` · ${language === 'he' ? event.locationHe : event.location}`}
+                          </div>
+                          {event.recapLink && (
+                            <a
+                              href={event.recapLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-4 w-full bg-stone-100 text-slate-700 py-2 rounded-lg text-sm font-medium hover:bg-stone-200 transition-colors block text-center"
+                            >
+                              {t('members.events.recap')}
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Right Column - Sidebar */}

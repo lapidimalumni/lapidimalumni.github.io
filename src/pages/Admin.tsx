@@ -3,8 +3,30 @@ import { useLanguage } from '../hooks/useLanguage'
 import { useAuth } from '../hooks/useAuth'
 import { adminAction } from '../lib/api'
 import { User } from '../types/user'
+import { EventRow, isPastEvent } from '../data/events'
 
 const SESSION_KEY = 'session_token'
+
+type EventForm = Omit<EventRow, 'id' | 'registration_link' | 'recap_link'> & {
+  id?: string
+  registration_link: string
+  recap_link: string
+}
+
+const emptyEvent: EventForm = {
+  title: '',
+  title_he: '',
+  description: '',
+  description_he: '',
+  event_date: '',
+  time_text: '',
+  location: '',
+  location_he: '',
+  image: '',
+  registration_link: '',
+  recap_link: '',
+  published: true,
+}
 
 interface AlumniWithMeta extends User {
   last_login_at: string | null
@@ -17,7 +39,7 @@ export function Admin() {
   const [alumni, setAlumni] = useState<AlumniWithMeta[]>([])
   const [stats, setStats] = useState<{ total: number; admins: number; ever_logged_in: number } | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState<'list' | 'add' | 'stats'>('list')
+  const [activeTab, setActiveTab] = useState<'list' | 'add' | 'events' | 'stats'>('list')
   const [removeStatus, setRemoveStatus] = useState<string | null>(null)
 
   // Add alumni form state
@@ -32,6 +54,12 @@ export function Admin() {
   const [addStatus, setAddStatus] = useState<'idle' | 'saving' | 'success' | 'error'>('idle')
   const [addError, setAddError] = useState('')
 
+  // Events state
+  const [events, setEvents] = useState<EventRow[]>([])
+  const [eventForm, setEventForm] = useState<EventForm | null>(null)
+  const [eventStatus, setEventStatus] = useState<{ kind: 'ok' | 'error'; text: string } | null>(null)
+  const [eventSaving, setEventSaving] = useState(false)
+
   const sessionToken = localStorage.getItem(SESSION_KEY) || ''
 
   useEffect(() => {
@@ -40,10 +68,14 @@ export function Admin() {
 
   const loadData = async () => {
     setIsLoading(true)
-    const [alumniResult, statsResult] = await Promise.all([
+    const [alumniResult, statsResult, eventsResult] = await Promise.all([
       adminAction(sessionToken, 'list-alumni'),
       adminAction(sessionToken, 'stats'),
+      adminAction(sessionToken, 'list-events'),
     ])
+    if (eventsResult.data) {
+      setEvents((eventsResult.data as { events: EventRow[] }).events || [])
+    }
     if (alumniResult.data) {
       setAlumni((alumniResult.data as { alumni: AlumniWithMeta[] }).alumni || [])
     }
@@ -96,6 +128,42 @@ export function Admin() {
     loadData()
   }
 
+  const handleSaveEvent = async (e: FormEvent) => {
+    e.preventDefault()
+    if (!eventForm) return
+    setEventSaving(true)
+    setEventStatus(null)
+    const result = await adminAction(sessionToken, 'save-event', { event: eventForm })
+    setEventSaving(false)
+    if (result.error) {
+      setEventStatus({ kind: 'error', text: result.error })
+      return
+    }
+    setEventForm(null)
+    setEventStatus({ kind: 'ok', text: t('admin.events.saved') })
+    loadData()
+  }
+
+  const handleDeleteEvent = async (id: string) => {
+    if (!confirm(t('admin.events.deleteConfirm'))) return
+    setEventStatus(null)
+    const result = await adminAction(sessionToken, 'delete-event', { id })
+    if (result.error) {
+      setEventStatus({ kind: 'error', text: result.error })
+      return
+    }
+    setEventStatus({ kind: 'ok', text: t('admin.events.deleted') })
+    loadData()
+  }
+
+  const startEditEvent = (ev: EventRow) => {
+    setEventStatus(null)
+    setEventForm({ ...ev, registration_link: ev.registration_link || '', recap_link: ev.recap_link || '' })
+  }
+
+  const eventInput = 'w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-amber-500 outline-none text-sm'
+  const eventLabel = 'block text-sm font-medium text-slate-900 mb-1'
+
   const formatLastLogin = (dateString: string | null) => {
     if (!dateString) return t('admin.table.never')
     const date = new Date(dateString)
@@ -128,7 +196,7 @@ export function Admin() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Tabs */}
           <div className="flex gap-2 mb-8">
-            {(['list', 'add', 'stats'] as const).map(tab => (
+            {(['list', 'add', 'events', 'stats'] as const).map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -313,6 +381,144 @@ export function Admin() {
                       {addStatus === 'saving' ? t('common.loading') : t('admin.form.submit')}
                     </button>
                   </form>
+                </div>
+              )}
+
+              {/* Events */}
+              {activeTab === 'events' && (
+                <div className="space-y-6">
+                  {eventStatus && (
+                    <div className={`rounded-lg p-4 text-sm border ${
+                      eventStatus.kind === 'ok'
+                        ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                        : 'bg-red-50 border-red-200 text-red-600'
+                    }`}>
+                      {eventStatus.text}
+                    </div>
+                  )}
+
+                  {eventForm ? (
+                    <form onSubmit={handleSaveEvent} className="bg-white rounded-xl p-8 shadow-sm max-w-3xl space-y-5">
+                      <h2 className="text-xl font-serif text-slate-900">
+                        {eventForm.id ? t('admin.events.edit') : t('admin.events.add')}
+                      </h2>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className={eventLabel}>{t('admin.events.titleEn')}</label>
+                          <input className={eventInput} required value={eventForm.title}
+                            onChange={e => setEventForm({ ...eventForm, title: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className={eventLabel}>{t('admin.events.titleHe')}</label>
+                          <input className={eventInput} dir="rtl" required value={eventForm.title_he}
+                            onChange={e => setEventForm({ ...eventForm, title_he: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className={eventLabel}>{t('admin.events.descEn')}</label>
+                          <textarea className={eventInput} rows={3} value={eventForm.description}
+                            onChange={e => setEventForm({ ...eventForm, description: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className={eventLabel}>{t('admin.events.descHe')}</label>
+                          <textarea className={eventInput} dir="rtl" rows={3} value={eventForm.description_he}
+                            onChange={e => setEventForm({ ...eventForm, description_he: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className={eventLabel}>{t('admin.events.date')}</label>
+                          <input className={eventInput} type="date" required value={eventForm.event_date}
+                            onChange={e => setEventForm({ ...eventForm, event_date: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className={eventLabel}>{t('admin.events.time')}</label>
+                          <input className={eventInput} value={eventForm.time_text}
+                            onChange={e => setEventForm({ ...eventForm, time_text: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className={eventLabel}>{t('admin.events.locationEn')}</label>
+                          <input className={eventInput} value={eventForm.location}
+                            onChange={e => setEventForm({ ...eventForm, location: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className={eventLabel}>{t('admin.events.locationHe')}</label>
+                          <input className={eventInput} dir="rtl" value={eventForm.location_he}
+                            onChange={e => setEventForm({ ...eventForm, location_he: e.target.value })} />
+                        </div>
+                      </div>
+                      <div>
+                        <label className={eventLabel}>{t('admin.events.image')}</label>
+                        <input className={eventInput} dir="ltr" value={eventForm.image}
+                          onChange={e => setEventForm({ ...eventForm, image: e.target.value })} />
+                        <p className="text-xs text-slate-500 mt-1">{t('admin.events.imageHint')}</p>
+                      </div>
+                      <div>
+                        <label className={eventLabel}>{t('admin.events.registration')}</label>
+                        <input className={eventInput} dir="ltr" type="url" placeholder="https://" value={eventForm.registration_link}
+                          onChange={e => setEventForm({ ...eventForm, registration_link: e.target.value })} />
+                      </div>
+                      <div>
+                        <label className={eventLabel}>{t('admin.events.recap')}</label>
+                        <input className={eventInput} dir="ltr" type="url" placeholder="https://" value={eventForm.recap_link}
+                          onChange={e => setEventForm({ ...eventForm, recap_link: e.target.value })} />
+                      </div>
+                      <label className="flex items-center gap-2 text-sm text-slate-900">
+                        <input type="checkbox" checked={eventForm.published}
+                          onChange={e => setEventForm({ ...eventForm, published: e.target.checked })} />
+                        {t('admin.events.published')}
+                      </label>
+                      <div className="flex gap-3">
+                        <button type="submit" disabled={eventSaving}
+                          className="bg-slate-900 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-slate-800 transition-colors text-sm disabled:opacity-60">
+                          {eventSaving ? t('common.loading') : t('admin.events.save')}
+                        </button>
+                        <button type="button" onClick={() => setEventForm(null)}
+                          className="bg-white border border-gray-200 text-slate-700 px-6 py-2.5 rounded-lg font-medium hover:bg-slate-50 transition-colors text-sm">
+                          {t('admin.events.cancel')}
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => { setEventStatus(null); setEventForm({ ...emptyEvent }) }}
+                        className="bg-slate-900 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-slate-800 transition-colors text-sm"
+                      >
+                        + {t('admin.events.add')}
+                      </button>
+                      <div className="bg-white rounded-xl shadow-sm divide-y divide-gray-100">
+                        {events.map(ev => (
+                          <div key={ev.id} className="p-4 flex items-center gap-4 flex-wrap">
+                            <div className="flex-1 min-w-[200px]">
+                              <div className="font-medium text-slate-900">
+                                {language === 'he' ? ev.title_he : ev.title}
+                              </div>
+                              <div className="text-xs text-slate-500 mt-0.5">
+                                {ev.event_date}{ev.time_text && ` · ${ev.time_text}`}
+                              </div>
+                            </div>
+                            <span className={`text-xs font-medium px-2 py-0.5 rounded ${
+                              isPastEvent({ date: ev.event_date }) ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'
+                            }`}>
+                              {isPastEvent({ date: ev.event_date }) ? t('admin.events.past') : t('admin.events.upcoming')}
+                            </span>
+                            {!ev.published && (
+                              <span className="text-xs font-medium px-2 py-0.5 rounded bg-amber-100 text-amber-700">
+                                {t('admin.events.hidden')}
+                              </span>
+                            )}
+                            <button onClick={() => startEditEvent(ev)} className="text-xs text-slate-700 hover:text-slate-900 font-medium">
+                              {t('admin.events.edit')}
+                            </button>
+                            <button onClick={() => handleDeleteEvent(ev.id)} className="text-xs text-red-500 hover:text-red-700 font-medium">
+                              {t('admin.events.delete')}
+                            </button>
+                          </div>
+                        ))}
+                        {events.length === 0 && (
+                          <div className="p-8 text-center text-slate-500">{t('admin.events.none')}</div>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
 

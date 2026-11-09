@@ -1,7 +1,7 @@
 import { useLanguage } from '../../hooks/useLanguage'
 import { Card, CardContent, CardFooter } from '../ui/Card'
 import { Button } from '../ui/Button'
-import { Event } from '../../data/events'
+import { Event, isPastEvent } from '../../data/events'
 
 interface EventCardProps {
   event: Event
@@ -16,7 +16,7 @@ export function EventCard({ event, showRegistration = false }: EventCardProps) {
   const location = language === 'he' ? event.locationHe : event.location
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
+    const date = new Date(`${dateString}T00:00:00`)
     return date.toLocaleDateString(language === 'he' ? 'he-IL' : 'en-US', {
       weekday: 'long',
       year: 'numeric',
@@ -25,7 +25,7 @@ export function EventCard({ event, showRegistration = false }: EventCardProps) {
     })
   }
 
-  const isPast = event.type === 'past'
+  const isPast = isPastEvent(event)
 
   return (
     <Card hover className={isPast ? 'opacity-75' : ''}>
