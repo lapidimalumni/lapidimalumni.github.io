@@ -1,0 +1,3 @@
+supabase/functions/get-session/index.ts filter=secrets
+supabase/functions/verify-magic-link/index.ts filter=secrets
+supabase/email-canon.sql filter=secrets

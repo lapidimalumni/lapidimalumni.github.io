@@ -1,0 +1,20 @@
+[functions.send-magic-link]
+verify_jwt = false
+
+[functions.verify-magic-link]
+verify_jwt = false
+
+[functions.get-session]
+verify_jwt = false
+
+[functions.logout]
+verify_jwt = false
+
+[functions.contact-form]
+verify_jwt = false
+
+[functions.admin]
+verify_jwt = false
+
+[functions.verify-certificate]
+verify_jwt = false

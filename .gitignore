@@ -32,10 +32,14 @@ Thumbs.db
 # Claude
 .claude/
 
-# Supabase — kept local only
-supabase/
+# Supabase CLI local state (project ref etc.)
+supabase/.temp/
 # Original full-size photos (optimized copies live in public/images)
 /images/
 
 # Member roster spreadsheets — personal data, local only
 members_do_not_commit/
+
+# Cloudflare Wrangler
+.wrangler/
+.dev.vars

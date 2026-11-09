@@ -187,3 +187,19 @@ If your database was created before events existed, run the `-- Events shown on 
 supabase functions deploy admin
 supabase functions deploy get-session
 ```
+
+## Placeholders in the committed code
+
+This repo is public, so `supabase/` is committed with placeholders instead of
+real values (the WhatsApp/Facebook group links and one personal email).
+On the machine that holds the real values, a local git filter swaps them back
+and forth automatically, so the working files stay fully functional. It is
+`.git/secret-filter.sh` plus two lines of local git config (not committed):
+
+```bash
+git config filter.secrets.clean  "sh .git/secret-filter.sh clean"
+git config filter.secrets.smudge "sh .git/secret-filter.sh smudge"
+```
+
+On a fresh clone the placeholders stay as they are; fill in the real values
+before deploying `get-session` and `verify-magic-link`.
